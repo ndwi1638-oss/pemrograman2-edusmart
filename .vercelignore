@@ -1,0 +1,5 @@
+# Backend Express + SQLite lokal tidak dipakai di Vercel (deployment statis).
+# Folder ini diabaikan agar Vercel tidak salah mendeteksi backend Express.
+server/
+harness-raport-test.js
+.gitignore
