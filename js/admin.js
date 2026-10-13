@@ -1642,7 +1642,7 @@ function initAdminBeasiswa() {
 }
 
 /* ---------- Init ---------- */
-document.addEventListener("DOMContentLoaded", function () {
+window.EduSmartReady(function () {
   aSeed();
   var guard = document.body ? document.body.getAttribute("data-guard") : null;
   if (guard !== "admin") return;

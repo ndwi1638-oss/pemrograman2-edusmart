@@ -41,6 +41,15 @@
   var cache = {};        // key -> string (isi mentah, seperti localStorage)
   var antre = Promise.resolve();
 
+  /* Cadangan bila js/remote.js tidak termuat: jalankan init langsung. */
+  if (typeof window.EduSmartReady !== "function") {
+    window.EduSmartReady = function (fn) {
+      var jalankan = function () { try { fn(); } catch (e) { console.error(e); } };
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", jalankan);
+      else jalankan();
+    };
+  }
+
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* abaikan */ } }
   function lsDel(k) { try { localStorage.removeItem(k); } catch (e) { /* abaikan */ } }
@@ -70,7 +79,21 @@
     return antre;
   }
 
+  /* Bila js/remote.js mengaktifkan penyimpanan awan (Firebase), semua tulis
+     dialihkan ke sana. Kalau tidak, tetap memakai server /api/data. */
+  function pakaiAwan() {
+    return !!(window.EduSmartRemote && window.EduSmartRemote.aktif && window.EduSmartRemote.ref);
+  }
+
   function kirim(key, value) {
+    if (pakaiAwan()) {
+      antrekan(function () {
+        return window.EduSmartRemote.put(key, value).catch(function (e) {
+          console.warn("[EduSmart] gagal menyimpan \"" + key + "\" ke awan: " + e.message);
+        });
+      });
+      return;
+    }
     antrekan(function () {
       return fetch("/api/data", {
         method: "PUT",
@@ -104,6 +127,14 @@
     del: function (key) {
       if (!serverAktif || LOKAL[key]) { lsDel(key); return; }
       delete cache[key];
+      if (pakaiAwan()) {
+        antrekan(function () {
+          return window.EduSmartRemote.del(key).catch(function (e) {
+            console.warn("[EduSmart] gagal menghapus \"" + key + "\" di awan: " + e.message);
+          });
+        });
+        return;
+      }
       antrekan(function () {
         return fetch("/api/data/" + encodeURIComponent(key), { method: "DELETE" })
           .catch(function (e) {
@@ -112,12 +143,24 @@
       });
     },
 
+    /* Terapkan data awan (kv) ke cache tanpa fetch. Dipakai js/remote.js. */
+    terapkanData: function (kv) {
+      if (serverAktif) isiCache({}, kv || {});
+    },
+
     /* Tunggu semua antrean tulis selesai (dipakai halaman Thank you/backup). */
     tulisSelesai: function () { return antre; },
 
     /* Muat ulang data dari server (setelah halaman lain mengubah data). */
     muatUlang: function () {
       if (!serverAktif) return antre;
+      if (pakaiAwan()) {
+        return antrekan(function () {
+          return window.EduSmartRemote.muatUlang().catch(function (e) {
+            console.warn("[EduSmart] gagal memuat ulang data awan: " + e.message);
+          });
+        });
+      }
       return antrekan(function () {
         return fetch("/api/data", { cache: "no-store" }).then(function (r) { return r.json(); })
           .then(function (d) {

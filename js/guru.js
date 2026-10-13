@@ -2108,7 +2108,7 @@ function raportDibagikanUntuk(email) {
 }
 
 /* ---------- Init modul guru ---------- */
-document.addEventListener("DOMContentLoaded", function () {
+window.EduSmartReady(function () {
   seedGuruData(); // selalu jalan (hanya mengisi yang kosong)
   var guard = document.body ? document.body.getAttribute("data-guard") : null;
   if (guard !== "guru") return;

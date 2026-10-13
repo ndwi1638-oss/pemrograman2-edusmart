@@ -485,7 +485,7 @@ function initDataDummy() {
   renderDataDummy();
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+window.EduSmartReady(function () {
   var guard = document.body ? document.body.getAttribute("data-guard") : null;
   if (guard !== "admin") return;
   if (typeof requireAdmin === "function" && !requireAdmin()) return;

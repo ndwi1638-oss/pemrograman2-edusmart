@@ -1670,7 +1670,7 @@ function initKegiatan() {
 }
 
 /* ---------- Init ---------- */
-document.addEventListener("DOMContentLoaded", function () {
+window.EduSmartReady(function () {
   seedDummyUsers();
   initNavbar();
   renderAuthState();
