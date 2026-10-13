@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Materi Guru</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link active" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Kelola Materi</h2>
+        <p>Tambah, edit, hapus, cari, dan filter materi pembelajaran.</p>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3 id="mat-form-title">Tambah Materi</h3>
+        <div id="materi-alert" class="alert" role="alert"></div>
+        <form id="form-materi" novalidate>
+          <input type="hidden" id="mat-id" value="">
+          <div class="form-group"><label for="mat-judul">Judul Materi</label><input type="text" id="mat-judul"></div>
+          <div class="form-group"><label for="mat-mapel">Mata Pelajaran</label><select id="mat-mapel"></select></div>
+          <div class="form-group"><label for="mat-kelas">Kelas</label><select id="mat-kelas"></select></div>
+          <div class="form-group"><label for="mat-deskripsi">Deskripsi Singkat</label><input type="text" id="mat-deskripsi"></div>
+          <div class="form-group"><label for="mat-isi">Isi Materi</label><textarea id="mat-isi" rows="4"></textarea></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Materi</button>
+            <button type="button" class="btn btn-secondary" id="mat-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="cari-materi-guru" placeholder="Cari materi...">
+        <select id="filter-kelas-materi" aria-label="Filter kelas"></select>
+        <select id="filter-mapel-materi" aria-label="Filter mata pelajaran"></select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Judul</th><th>Mapel</th><th>Kelas</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+          <tbody id="materi-guru-tbody"><tr><td colspan="6">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

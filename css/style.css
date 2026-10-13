@@ -1,0 +1,343 @@
+/* EduSmart - style.css | Tema pendidikan modern, responsive, tanpa framework */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --accent: #f59e0b;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --success: #16a34a;
+  --error: #dc2626;
+  --radius: 12px;
+  --shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container { width: min(1100px, 92%); margin: 0 auto; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.8rem 0;
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.nav-links a {
+  text-decoration: none; color: var(--text); font-weight: 600;
+  padding: 0.45rem 0.8rem; border-radius: 8px; font-size: 0.95rem;
+}
+.nav-links a:hover { background: #eff6ff; color: var(--primary); }
+.nav-links a.active { background: var(--primary); color: #fff; }
+.nav-links a.btn-register { border: 1px solid var(--primary); color: var(--primary); }
+.nav-toggle {
+  display: none; font-size: 1.5rem; background: none;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.2rem 0.7rem; cursor: pointer;
+}
+.nav-user { font-size: 0.85rem; color: var(--muted); }
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff; padding: 4rem 0; text-align: center;
+}
+.hero h1 { font-size: 2.4rem; margin-bottom: 0.6rem; }
+.hero p { max-width: 640px; margin: 0 auto 1.4rem; opacity: 0.92; }
+.hero-actions { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block; padding: 0.65rem 1.3rem; border-radius: 10px;
+  text-decoration: none; font-weight: 700; border: none; cursor: pointer;
+  font-size: 0.95rem;
+}
+.btn-primary { background: var(--accent); color: #1e293b; }
+.btn-primary:hover { filter: brightness(0.95); }
+.btn-secondary { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+.btn-dark { background: var(--primary); color: #fff; width: 100%; }
+.btn-dark:hover { background: var(--primary-dark); }
+.btn-link { background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 700; }
+
+/* ---------- Sections & cards ---------- */
+.section { padding: 2.5rem 0; }
+.section h2 { text-align: center; margin-bottom: 0.4rem; }
+.section .subtitle { text-align: center; color: var(--muted); margin-bottom: 1.6rem; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.3rem; box-shadow: var(--shadow);
+}
+.card h3 { margin-bottom: 0.4rem; color: var(--primary-dark); }
+.card p { color: var(--muted); font-size: 0.94rem; }
+.card .tag {
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  background: #eff6ff; color: var(--primary); border-radius: 20px;
+  padding: 0.15rem 0.7rem; margin-bottom: 0.5rem;
+}
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.4rem; }
+.stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; }
+.stat strong { font-size: 1.5rem; color: var(--primary); display: block; }
+
+/* ---------- Form ---------- */
+.form-wrap { max-width: 480px; margin: 0 auto; }
+.form-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow);
+}
+.form-card h2 { text-align: center; margin-bottom: 0.3rem; }
+.form-card .desc { text-align: center; color: var(--muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 0.65rem 0.8rem; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 0.95rem; font-family: inherit;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: 2px solid var(--primary); border-color: var(--primary);
+}
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 3.2rem; }
+.toggle-pass {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  background: #f1f5f9; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 0.75rem; padding: 0.25rem 0.5rem; cursor: pointer;
+}
+.alert { padding: 0.7rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; display: none; }
+.alert.show { display: block; }
+.alert-error { background: #fef2f2; color: var(--error); border: 1px solid #fecaca; }
+.alert-success { background: #f0fdf4; color: var(--success); border: 1px solid #bbf7d0; }
+.form-foot { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+.demo-box { background: #fffbeb; border: 1px dashed var(--accent); border-radius: 8px; padding: 0.8rem; font-size: 0.85rem; margin-top: 1rem; }
+
+/* ---------- Footer ---------- */
+footer { background: #0f172a; color: #cbd5e1; margin-top: 2rem; }
+.footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; padding: 2rem 0; }
+footer h4 { color: #fff; margin-bottom: 0.6rem; }
+footer a { color: #cbd5e1; text-decoration: none; font-size: 0.9rem; }
+footer a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid #1e293b; text-align: center; padding: 0.9rem; font-size: 0.85rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.8rem; }
+  .grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none; width: 100%; flex-direction: column;
+    align-items: stretch; padding: 0.6rem 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-inner { flex-wrap: wrap; }
+}
+
+/* ===== Modul Siswa (tahap 2, tambahan) ===== */
+.logo-sub { font-size: 0.75rem; font-weight: 700; color: var(--muted); }
+.shell { display: flex; gap: 1.2rem; align-items: flex-start; padding: 1.5rem 0; }
+.sidebar {
+  width: 250px; flex-shrink: 0; background: var(--card);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1rem; position: sticky; top: 76px;
+}
+.side-title { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+.side-link {
+  display: block; text-decoration: none; color: var(--text); font-weight: 600;
+  font-size: 0.92rem; padding: 0.55rem 0.8rem; border-radius: 8px; margin-bottom: 0.15rem;
+}
+.side-link:hover { background: #eff6ff; color: var(--primary); }
+.side-link.active { background: var(--primary); color: #fff; }
+.side-logout {
+  width: 100%; margin-top: 0.8rem; padding: 0.6rem; border-radius: 8px;
+  border: 1px solid #fecaca; background: #fef2f2; color: var(--error);
+  font-weight: 700; cursor: pointer;
+}
+.content { flex: 1; min-width: 0; }
+.page-head { margin-bottom: 1.2rem; }
+.page-head h2 { text-align: left; }
+.page-head p { color: var(--muted); font-size: 0.9rem; }
+.profile-top { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.2rem; }
+.avatar {
+  width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+  background: var(--primary); color: #fff; font-size: 1.8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.badge {
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  border-radius: 20px; padding: 0.2rem 0.75rem;
+}
+.b-green { background: #dcfce7; color: #15803d; }
+.b-red { background: #fee2e2; color: #b91c1c; }
+.b-yellow { background: #fef9c3; color: #a16207; }
+.b-blue { background: #dbeafe; color: #1d4ed8; }
+.b-gray { background: #f1f5f9; color: #475569; }
+.table-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+table.table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 640px; }
+table.table th, table.table td { padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); text-align: left; }
+table.table th { background: #f1f5f9; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); }
+table.table tr:last-child td { border-bottom: none; }
+.toolbar { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.toolbar input, .toolbar select {
+  padding: 0.6rem 0.8rem; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 0.9rem; font-family: inherit;
+}
+.toolbar input { flex: 1; min-width: 180px; }
+.detail-box { margin-top: 1rem; }
+.quick-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.list-plain { list-style: none; }
+.list-plain li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+.list-plain li:last-child { border-bottom: none; }
+.muted { color: var(--muted); font-size: 0.88rem; }
+
+@media (max-width: 860px) {
+  .shell { flex-direction: column; }
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 260px; z-index: 200;
+    border-radius: 0; transform: translateX(-105%); transition: transform 0.25s ease;
+  }
+  .sidebar.open { transform: none; }
+  .profile-top { flex-direction: column; text-align: center; }
+}
+
+/* ===== Tim Pengembang (tambahan) ===== */
+.team-card { text-align: center; }
+.team-photo-wrap {
+  position: relative; width: 130px; height: 130px; margin: 0 auto 0.9rem;
+  border-radius: 50%; background: var(--primary);
+  border: 4px solid #dbeafe; overflow: hidden;
+}
+.team-initial {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  color: #fff; font-size: 2.2rem; font-weight: 800;
+}
+.team-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+}
+.team-nim { font-weight: 700; color: var(--primary-dark); }
+.btn-upload {
+  display: inline-block; font-size: 0.8rem; font-weight: 700;
+  color: var(--primary); border: 1px solid var(--primary);
+  border-radius: 8px; padding: 0.35rem 0.9rem; cursor: pointer; background: #fff;
+}
+.btn-upload:hover { background: #eff6ff; }
+.upload-note { font-size: 0.8rem; min-height: 1.2em; margin-top: 0.3rem; }
+
+/* ===== Galeri (tambahan) ===== */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.1rem; }
+.g-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; margin-bottom: 0.6rem; }
+.g-img-btn { border: none; background: none; padding: 0; cursor: pointer; width: 100%; display: block; }
+.g-aksi { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin-top: 0.7rem; }
+.btn-reset {
+  font-size: 0.8rem; font-weight: 700; font-family: inherit; cursor: pointer;
+  color: var(--muted); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.35rem 0.9rem; background: #fff;
+}
+.btn-reset:hover { background: #f1f5f9; }
+/* .card p lebih spesifik daripada .upload-note, jadi diulang di sini. */
+.g-card .upload-note { font-size: 0.8rem; min-height: 1.2em; margin-top: 0.3rem; }
+.upload-hint {
+  display: block; margin: -0.5rem 0 1rem; padding: 0.6rem 0.9rem;
+  background: #eff6ff; border-left: 3px solid var(--primary);
+  border-radius: 6px; color: var(--muted); font-size: 0.85rem;
+}
+.filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+.filter-btn {
+  padding: 0.45rem 1rem; border-radius: 20px; border: 1px solid var(--border);
+  background: var(--card); font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: inherit;
+}
+.filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.lightbox {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8);
+  display: none; align-items: center; justify-content: center; z-index: 300; padding: 1rem;
+}
+.lightbox.open { display: flex; }
+.lightbox-box {
+  background: #fff; border-radius: 12px; max-width: 640px; width: 100%;
+  padding: 1.2rem; position: relative; max-height: 90vh; overflow: auto;
+}
+.lightbox-box img { width: 100%; border-radius: 8px; margin-bottom: 0.7rem; }
+.lightbox-close {
+  position: absolute; top: 0.5rem; right: 0.7rem; font-size: 1.6rem;
+  background: none; border: none; cursor: pointer; color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 400px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== Modul Guru (tambahan) ===== */
+.btn-auto { width: auto; }
+.btn-small {
+  padding: 0.4rem 0.8rem; font-size: 0.85rem; width: auto;
+  border-radius: 8px; font-weight: 700; cursor: pointer;
+  text-decoration: none; display: inline-block;
+}
+.btn-danger {
+  background: #fef2f2; color: var(--error); border: 1px solid #fecaca;
+  padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 700;
+  cursor: pointer; font-size: 0.85rem; font-family: inherit;
+}
+.radio-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.radio-row label { display: flex; gap: 0.3rem; align-items: center; font-size: 0.88rem; font-weight: 600; }
+/* Centang mapel/kelas di profil guru */
+.check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.4rem; margin-top: 0.4rem; }
+.check-grid label { display: flex; gap: 0.4rem; align-items: center; font-size: 0.88rem; font-weight: 600; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.6rem; cursor: pointer; }
+#pg-avatar { position: relative; overflow: hidden; }
+#pg-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ===== Program (kartu bisa diklik) ===== */
+[data-program-card] { cursor: pointer; }
+[data-program-card]:hover { border-color: var(--primary); }
+
+/* ===== Rapor Kurikulum Merdeka (halaman siswa) ===== */
+.raport { margin-bottom: 1.2rem; }
+.raport-kop { text-align: center; border-bottom: 3px double var(--text); padding-bottom: 0.6rem; margin-bottom: 1rem; }
+.raport-kop h3 { color: var(--text); margin-bottom: 0.1rem; letter-spacing: 1px; }
+.raport-kop p { color: var(--muted); font-size: 0.9rem; }
+.raport-id { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.92rem; }
+.raport-id td { padding: 0.25rem 0.4rem; vertical-align: top; }
+.raport-id td:first-child { width: 180px; color: var(--muted); }
+.raport h4 { margin: 1.1rem 0 0.5rem; color: var(--primary-dark); }
+.raport-ttd { display: flex; justify-content: space-between; gap: 1rem; text-align: center; margin-top: 1.6rem; font-size: 0.9rem; }
+
+/* Cetak rapor: hanya isi rapor yang keluar di kertas. */
+@media print {
+  .navbar, .sidebar, footer, .no-print, #sideToggle { display: none !important; }
+  .shell { display: block; padding: 0; }
+  .content { width: 100%; }
+  .raport { box-shadow: none; border: 1px solid #999; break-inside: avoid; }
+  body { background: #fff; }
+  /* Halaman guru: form + tabel daftar disembunyikan, hanya detail rapor yang dicetak.
+     Jadi tidak ada lagi "kertas pertama" berisi form. Berlaku saat klik Cetak
+     (via class cetak-raport) maupun Ctrl+P langsung (via :has sebagai cadangan). */
+  body.cetak-raport .content > *:not(#raport-detail) { display: none !important; }
+  body:has(#raport-detail:not(:empty)) .content > *:not(#raport-detail) { display: none !important; }
+  body.cetak-raport .content, body:has(#raport-detail:not(:empty)) .content { padding: 0; margin: 0; }
+  #raport-detail:empty { display: none !important; }
+  /* Halaman siswa: hanya daftar rapor yang dicetak, page-head disembunyikan. */
+  body:has(#raport-list) .content > *:not(#raport-list) { display: none !important; }
+}

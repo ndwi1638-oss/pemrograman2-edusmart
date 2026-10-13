@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Kontak</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Edu<span>Smart</span></a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">&#9776;</button>
+      <nav class="nav-links">
+        <a href="index.html">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="program.html">Program</a>
+        <a href="jurusan.html">Jurusan</a>
+        <a href="kegiatan.html">Kegiatan</a>
+        <a href="galeri.html">Galeri</a>
+        <a href="kontak.html" class="active">Kontak</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Hubungi Kami</h1>
+        <p>Ada pertanyaan soal program atau pendaftaran? Kirim pesan di bawah ini.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid">
+          <div class="card"><h3>Alamat</h3><p>Jl. Pendidikan No. 123, Jakarta, Indonesia</p></div>
+          <div class="card"><h3>Email &amp; Telepon</h3><p>info@edusmart.id<br>(021) 1234-5678</p></div>
+          <div class="card"><h3>Jam Operasional</h3><p>Senin - Jumat, 08.00 - 16.00 WIB</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container form-wrap">
+        <div class="form-card">
+          <h2>Formulir Pesan</h2>
+          <p class="desc">Pesan tersimpan lokal (LocalStorage) untuk tahap prototype.</p>
+          <div id="kontak-alert" class="alert" role="alert"></div>
+          <form id="form-kontak" novalidate>
+            <div class="form-group">
+              <label for="kontak-nama">Nama Lengkap</label>
+              <input type="text" id="kontak-nama" placeholder="Nama Anda" required>
+            </div>
+            <div class="form-group">
+              <label for="kontak-email">Email</label>
+              <input type="email" id="kontak-email" placeholder="nama@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="kontak-pesan">Pesan</label>
+              <textarea id="kontak-pesan" rows="4" placeholder="Tulis pesan Anda..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark">Kirim Pesan</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><h4>EduSmart</h4><p>Platform pendidikan modern untuk masa depan cerah.</p><p id="nav-auth-state" class="nav-user"></p></div>
+      <div><h4>Navigasi</h4><p><a href="index.html">Beranda</a> &middot; <a href="tentang.html">Tentang</a> &middot; <a href="program.html">Program</a> &middot; <a href="jurusan.html">Jurusan</a> &middot; <a href="kegiatan.html">Kegiatan</a></p></div>
+      <div><h4>Akun</h4><p><a href="login.html">Login</a></p><p>info@edusmart.id</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 EduSmart. Tahap 1 - HTML, CSS, JS Vanilla, LocalStorage.</div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

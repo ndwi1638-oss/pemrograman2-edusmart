@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Raport Digital (Wali Kelas)</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link active" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Raport Digital</h2>
+        <p>Wali kelas memakai kelas binaannya, guru mapel memakai kelas yang diajar. Nilai dan absensi diambil otomatis. Status Draft belum terlihat siswa.</p>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Buat / Edit Raport</h3>
+        <div id="raport-alert" class="alert" role="alert"></div>
+        <form id="form-raport" novalidate>
+          <input type="hidden" id="rp-id" value="">
+          <div class="form-group"><label for="rp-siswa">Pilih Siswa (kelas binaan / yang diajar)</label><select id="rp-siswa"></select></div>
+          <p class="muted" id="rp-pratinjau" style="margin-bottom:1rem"></p>
+          <div class="form-group"><label for="rp-semester">Semester</label><select id="rp-semester"><option value="">-- Pilih --</option><option value="1">1 (Ganjil)</option><option value="2">2 (Genap)</option></select></div>
+          <div class="form-group"><label for="rp-tahun">Tahun Ajaran</label><input type="text" id="rp-tahun" placeholder="Contoh: 2026/2027"></div>
+          <div class="form-group"><label for="rp-sikap">Sikap</label><input type="text" id="rp-sikap" placeholder="Contoh: Baik, disiplin, dan sopan"></div>
+          <div class="form-group"><label for="rp-perkembangan">Perkembangan Siswa</label><textarea id="rp-perkembangan" rows="3" placeholder="Perkembangan akademik dan non-akademik siswa..."></textarea></div>
+          <div class="form-group"><label for="rp-catatan">Catatan Wali Kelas</label><textarea id="rp-catatan" rows="3" placeholder="Catatan wali kelas..."></textarea></div>
+          <div class="form-group"><label for="rp-tambahan">Catatan Tambahan (opsional)</label><textarea id="rp-tambahan" rows="2"></textarea></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Raport (Draft)</button>
+            <button type="button" class="btn btn-secondary" id="rp-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="cari-raport" placeholder="Cari nama siswa...">
+        <select id="filter-status-raport" aria-label="Filter status">
+          <option value="semua">Semua Status</option>
+          <option value="Draft">Draft</option>
+          <option value="Dibagikan">Dibagikan</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Nama Siswa</th><th>Semester</th><th>Tahun Ajaran</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="raport-guru-tbody"><tr><td colspan="6">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div id="raport-detail" style="margin-top:1.2rem"></div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

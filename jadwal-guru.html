@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Jadwal Guru</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link active" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Kelola Jadwal</h2>
+        <p>Tambah, edit, hapus jadwal pelajaran per kelas. Siswa melihat jadwal kelasnya otomatis.</p>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Tambah Jadwal</h3>
+        <div id="jadwal-alert" class="alert" role="alert"></div>
+        <form id="form-jadwal" novalidate>
+          <input type="hidden" id="jd-id" value="">
+          <div class="form-group"><label for="jd-hari">Hari</label><select id="jd-hari"></select></div>
+          <div class="form-group"><label for="jd-kelas">Kelas</label><select id="jd-kelas"></select></div>
+          <div class="form-group"><label for="jd-mapel">Mata Pelajaran</label><select id="jd-mapel"></select></div>
+          <div class="form-group"><label for="jd-guru">Guru Pengajar</label><select id="jd-guru"></select></div>
+          <div class="form-group"><label for="jd-mulai">Jam Mulai</label><input type="text" id="jd-mulai" placeholder="Contoh: 07.00"></div>
+          <div class="form-group"><label for="jd-selesai">Jam Selesai</label><input type="text" id="jd-selesai" placeholder="Contoh: 08.30"></div>
+          <div class="form-group"><label for="jd-ruang">Ruang</label><input type="text" id="jd-ruang" placeholder="Contoh: R-01"></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Jadwal</button>
+            <button type="button" class="btn btn-secondary" id="jd-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <select id="filter-hari-jadwal" aria-label="Filter hari"></select>
+        <select id="filter-kelas-jadwal" aria-label="Filter kelas"></select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Hari</th><th>Jam</th><th>Mapel</th><th>Kelas</th><th>Guru</th><th>Ruang</th><th>Aksi</th></tr></thead>
+          <tbody id="jd-tbody"><tr><td colspan="8">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Profil Guru</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link active" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Profil Guru</h2>
+        <p>Data tersimpan di LocalStorage dan tetap ada setelah refresh.</p>
+      </div>
+
+      <div class="card profile-top">
+        <div class="avatar" id="pg-avatar"><span id="pg-initial">G</span><img id="pg-foto" class="team-photo" alt="Foto profil guru" style="display:none"></div>
+        <div>
+          <p><label class="btn-upload">Ganti Foto<input type="file" id="pg-file" accept="image/*" hidden></label></p>
+          <p class="muted">Tekan <strong>Edit</strong> untuk mengubah data, lalu <strong>Simpan Perubahan</strong>.</p>
+        </div>
+      </div>
+
+      <div class="form-card" style="max-width:100%">
+        <div id="profil-guru-alert" class="alert" role="alert"></div>
+        <form id="form-profil-guru" novalidate>
+          <div class="form-group"><label for="pg-nama">Nama</label><input type="text" id="pg-nama"></div>
+          <div class="form-group"><label for="pg-nip">NIP (tidak dapat diubah)</label><input type="text" id="pg-nip" disabled></div>
+          <div class="form-group"><label for="pg-email">Email</label><input type="email" id="pg-email"></div>
+          <div class="form-group"><label for="pg-jenis">Jenis Guru</label><input type="text" id="pg-jenis" disabled></div>
+          <div class="form-group"><label for="pg-mapel">Mata Pelajaran (diampu)</label><input type="text" id="pg-mapel" disabled><div class="check-grid" id="pg-mapel-box" hidden></div></div>
+          <div class="form-group"><label for="pg-kelas">Kelas (diajar)</label><input type="text" id="pg-kelas" disabled><div class="check-grid" id="pg-kelas-box" hidden></div></div>
+          <div class="form-group" id="wrap-pg-wali" hidden><label for="pg-wali">Kelas Binaan (Wali)</label><input type="text" id="pg-wali" disabled></div>
+          <div class="form-group"><label for="pg-telepon">Nomor Telepon</label><input type="text" id="pg-telepon"></div>
+          <div class="form-group"><label for="pg-alamat">Alamat</label><textarea id="pg-alamat" rows="2"></textarea></div>
+          <div class="toolbar">
+            <button type="button" class="btn btn-secondary" id="pg-edit" style="color:#1e293b;border-color:#cbd5e1">Edit</button>
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Perubahan</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Ubah Password</h3>
+        <p class="muted">Password diberikan Admin. Gunakan form ini untuk mengganti sendiri.</p>
+        <div id="guru-sandun-alert" class="alert" role="alert"></div>
+        <form data-ganti-sandun data-alert="guru-sandun-alert" novalidate>
+          <div class="form-group">
+            <label for="gpw-lama">Password Lama</label>
+            <input type="password" id="gpw-lama" data-pass-lama>
+          </div>
+          <div class="form-group">
+            <label for="gpw-baru">Password Baru (min. 6 karakter)</label>
+            <input type="password" id="gpw-baru" data-pass-baru>
+          </div>
+          <div class="form-group">
+            <label for="gpw-konfirmasi">Ulangi Password Baru</label>
+            <input type="password" id="gpw-konfirmasi" data-pass-konfirmasi>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Password Baru</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

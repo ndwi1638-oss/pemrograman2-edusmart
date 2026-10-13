@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Pengumpulan Tugas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="siswa">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-siswa.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Siswa</small></a>
+      <span class="nav-user" id="nav-siswa-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu siswa">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Siswa</p>
+      <nav>
+        <a class="side-link" href="dashboard-siswa.html">Dashboard</a>
+        <a class="side-link" href="profil-siswa.html">Profil Saya</a>
+        <a class="side-link" href="jadwal-pelajaran.html">Jadwal Pelajaran</a>
+        <a class="side-link" href="materi-pembelajaran.html">Materi Pembelajaran</a>
+        <a class="side-link" href="tugas.html">Tugas</a>
+        <a class="side-link active" href="pengumpulan-tugas.html">Pengumpulan Tugas</a>
+        <a class="side-link" href="nilai.html">Nilai</a>
+        <a class="side-link" href="absensi.html">Absensi</a>
+        <a class="side-link" href="raport-siswa.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Pengumpulan Tugas</h2>
+        <p>Simulasi pengumpulan — tanpa upload sungguhan, data tersimpan di LocalStorage.</p>
+      </div>
+
+      <div class="card" id="kumpul-info"><p class="muted">Memuat detail tugas...</p></div>
+
+      <div class="form-card" style="max-width:100%;margin-top:1.2rem">
+        <div id="kumpul-alert" class="alert" role="alert"></div>
+        <form id="form-kumpul" novalidate>
+          <div class="form-group">
+            <label for="kumpul-tugas">Pilih Tugas</label>
+            <select id="kumpul-tugas"></select>
+          </div>
+          <div class="form-group">
+            <label for="kumpul-jawaban">Jawaban Siswa</label>
+            <textarea id="kumpul-jawaban" rows="4" placeholder="Tulis jawaban atau ringkasan pekerjaanmu..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="kumpul-file">Nama File Tugas (simulasi)</label>
+            <input type="text" id="kumpul-file" placeholder="Contoh: tugas-matematika.pdf">
+          </div>
+          <button type="submit" class="btn btn-dark">Kumpulkan Tugas</button>
+        </form>
+      </div>
+
+      <div class="card" style="margin-top:1.2rem">
+        <h3>Riwayat Pengumpulan Saya</h3>
+        <ul class="list-plain" id="riwayat-list"><li class="muted">Memuat...</li></ul>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Siswa. <a href="dashboard-siswa.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

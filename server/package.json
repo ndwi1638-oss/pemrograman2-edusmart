@@ -1,0 +1,19 @@
+{
+  "name": "edusmart-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend EduSmart - Express + SQLite bawaan Node (node:sqlite). Menayani file statis situs dan API data.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "init-db": "node init-db.js",
+    "reset": "node reset.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

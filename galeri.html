@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Galeri Sekolah</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Edu<span>Smart</span></a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">&#9776;</button>
+      <nav class="nav-links">
+        <a href="index.html">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="program.html">Program</a>
+        <a href="jurusan.html">Jurusan</a>
+        <a href="kegiatan.html">Kegiatan</a>
+        <a href="galeri.html" class="active">Galeri</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Galeri Sekolah</h1>
+        <p>Dokumentasi gedung, pimpinan, ekstrakurikuler, dan prestasi siswa EduSmart.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Dokumentasi Kegiatan</h2>
+        <p class="subtitle">Saring berdasarkan kategori atau cari berdasarkan judul.</p>
+        <p class="upload-hint" id="galeri-hint">Setiap kartu punya tombol <strong>Ganti Foto</strong>. Pilih file gambar Anda (misalnya <em>kepala sekolah.jpg</em>) untuk mengganti foto galeri itu. Tekan <strong>Kembalikan</strong> untuk memakai foto bawaan lagi.</p>
+
+        <div class="toolbar">
+          <input type="text" id="cari-galeri" placeholder="Cari galeri berdasarkan judul...">
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-galeri-filter="semua">Semua</button>
+          <button class="filter-btn" data-galeri-filter="gedung">Gedung Sekolah</button>
+          <button class="filter-btn" data-galeri-filter="kepala">Kepala Sekolah</button>
+          <button class="filter-btn" data-galeri-filter="wakil">Wakil Kepala Sekolah</button>
+          <button class="filter-btn" data-galeri-filter="ekstra">Ekstrakurikuler</button>
+          <button class="filter-btn" data-galeri-filter="lomba">Lomba</button>
+        </div>
+
+        <div class="gallery-grid" id="galeri-list"><p class="muted">Memuat...</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Pratinjau foto">
+    <div class="lightbox-box">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Tutup pratinjau">&times;</button>
+      <img id="lightbox-img" src="gedung.jpg" alt="Pratinjau galeri">
+      <h3 id="lightbox-judul"></h3>
+      <p class="muted" id="lightbox-deskripsi"></p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><h4>EduSmart</h4><p>Platform pendidikan modern untuk masa depan cerah.</p><p id="nav-auth-state" class="nav-user"></p></div>
+      <div><h4>Navigasi</h4><p><a href="index.html">Beranda</a> &middot; <a href="tentang.html">Tentang</a> &middot; <a href="galeri.html">Galeri</a> &middot; <a href="kegiatan.html">Kegiatan</a> &middot; <a href="kontak.html">Kontak</a></p></div>
+      <div><h4>Akun</h4><p><a href="login.html">Login</a></p><p>info@edusmart.id</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 EduSmart. Tahap 1 - HTML, CSS, JS Vanilla, LocalStorage.</div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

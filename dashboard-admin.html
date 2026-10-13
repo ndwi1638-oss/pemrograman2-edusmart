@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Dashboard Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="admin">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-admin.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Admin</small></a>
+      <span class="nav-user" id="nav-admin-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu admin">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Admin</p>
+      <nav>
+        <a class="side-link" href="#ringkasan">Ringkasan</a>
+        <a class="side-link" href="#siswa">Data Siswa</a>
+        <a class="side-link" href="#guru">Data Guru</a>
+        <a class="side-link" href="#kelas">Kelola Kelas</a>
+        <a class="side-link" href="#jurusan">Kelola Jurusan</a>
+        <a class="side-link" href="#mapel">Kelola Mapel</a>
+        <a class="side-link" href="#jadwal">Kelola Jadwal</a>
+        <a class="side-link" href="#raport">Raport Digital</a>
+        <a class="side-link" href="#kegiatan">Kelola Kegiatan</a>
+        <a class="side-link" href="#dummy">Data Dummy</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head" id="ringkasan">
+        <h2>Dashboard Admin</h2>
+        <p id="adm-info">Memuat...</p>
+      </div>
+
+      <div class="card profile-top">
+        <div class="avatar" id="adm-avatar">A</div>
+        <div>
+          <h3 id="adm-nama">Memuat...</h3>
+          <p class="muted">Administrator EduSmart — input data siswa, guru, kelas, mapel, dan jadwal.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong id="stat-asiswa">-</strong>Siswa</div>
+        <div class="stat"><strong id="stat-aguru">-</strong>Guru</div>
+        <div class="stat"><strong id="stat-akelas">-</strong>Kelas</div>
+        <div class="stat"><strong id="stat-amapel">-</strong>Mata Pelajaran</div>
+        <div class="stat"><strong id="stat-atugas">-</strong>Tugas</div>
+      </div>
+
+      <div class="page-head" id="siswa" style="margin-top:1.6rem">
+        <h2>Data Siswa</h2>
+        <p>Admin menentukan kelas setiap siswa (relasi via classId).</p>
+      </div>
+      <div id="asiswa-alert" class="alert" role="alert"></div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Tambah Siswa &amp; Akun Login</h3>
+        <p class="muted">NIS/NISN dipakai sebagai username untuk login. Password diberikan ke siswa, lalu siswa bisa menggantinya sendiri di halaman Profilnya.</p>
+        <form id="form-siswa-admin" novalidate>
+          <div class="form-group">
+            <label for="ts-nis">NIS / NISN (username login)</label>
+            <input type="text" id="ts-nis" placeholder="Contoh: 2026901">
+          </div>
+          <div class="form-group">
+            <label for="ts-nama">Nama Lengkap</label>
+            <input type="text" id="ts-nama" placeholder="Contoh: Putri Ayu Lestari">
+          </div>
+          <div class="form-group">
+            <label for="ts-kelas">Kelas</label>
+            <select id="ts-kelas"></select>
+          </div>
+          <div class="form-group">
+            <label for="ts-jk">Jenis Kelamin</label>
+            <select id="ts-jk"><option value="">-- Pilih --</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+          </div>
+          <div class="form-group">
+            <label for="ts-email">Email (opsional, untuk kontak)</label>
+            <input type="email" id="ts-email" placeholder="siswa@email.com">
+          </div>
+          <div class="form-group">
+            <label for="ts-telp">No. Telepon (opsional)</label>
+            <input type="text" id="ts-telp" placeholder="0812xxxxxxx">
+          </div>
+          <div class="form-group">
+            <label for="ts-alamat">Alamat (opsional)</label>
+            <textarea id="ts-alamat" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="ts-sandun">Password (diberikan ke siswa)</label>
+            <div class="password-wrap">
+              <input type="text" id="ts-sandun" placeholder="Minimal 6 karakter">
+              <button type="button" class="toggle-pass" data-acak="ts-sandun">Acak</button>
+            </div>
+            <p class="muted" style="margin:.3rem 0 0;font-size:.82rem">Tekan <strong>Acak</strong> untuk membuatkan password, lalu catat untuk siswa.</p>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Siswa &amp; Akun</button>
+            <button type="button" class="btn btn-secondary" id="ts-reset" style="color:#1e293b;border-color:#cbd5e1">Kosongkan Form</button>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="cari-admin-siswa" placeholder="Cari nama / NIS...">
+        <select id="filter-kelas-admin-siswa" aria-label="Filter kelas"></select>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>NIS/NISN</th><th>Nama</th><th>Email</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-siswa-tbody"><tr><td colspan="6">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="form-card" id="reset-siswa-box" style="max-width:100%;margin:1rem 0 0;display:none;border-color:#f59e0b">
+        <h3>Reset Password Siswa</h3>
+        <p class="muted" id="reset-siswa-info">Pilih tombol "Reset Password" pada tabel siswa.</p>
+        <div class="form-group">
+          <label for="reset-siswa-input">Password Baru</label>
+          <div class="password-wrap">
+            <input type="text" id="reset-siswa-input" placeholder="Minimal 6 karakter">
+            <button type="button" class="toggle-pass" data-acak="reset-siswa-input">Acak</button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="btn btn-dark btn-auto" id="reset-siswa-simpan">Simpan Password Baru</button>
+          <button type="button" class="btn btn-secondary" id="reset-siswa-batal" style="color:#1e293b;border-color:#cbd5e1">Batal</button>
+        </div>
+      </div>
+
+      <div class="page-head" id="guru" style="margin-top:1.6rem">
+        <h2>Data Guru</h2>
+        <p>Admin menentukan jenis guru (mapel / wali kelas), kelas yang diajar, mapel, dan wali kelas.</p>
+      </div>
+      <div id="aguru-alert" class="alert" role="alert"></div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3 id="ag-form-title">Atur Guru</h3>
+        <form id="form-guru-admin" novalidate>
+          <input type="hidden" id="ag-id" value="">
+          <p class="muted" id="ag-nama">Pilih guru pada tabel (tombol Atur), atau tekan "Tambah Guru Baru" di bawah.</p>
+          <div class="form-group">
+            <label for="ag-nama-input">Nama Lengkap</label>
+            <input type="text" id="ag-nama-input" placeholder="Contoh: Andi Wijaya, S.Pd.">
+            <p class="muted" style="margin:.3rem 0 0;font-size:.82rem">Diisi saat menambah guru baru. Saat mengubah data guru yang sudah ada, nama tidak diubah dari sini.</p>
+          </div>
+          <div class="form-group">
+            <label for="ag-nip">NIP / NUPTK (username login)</label>
+            <input type="text" id="ag-nip" placeholder="Contoh: 198001012005011001">
+          </div>
+          <div class="form-group">
+            <label for="ag-sandun">Password (diberikan ke guru)</label>
+            <div class="password-wrap">
+              <input type="text" id="ag-sandun" placeholder="Minimal 6 karakter">
+              <button type="button" class="toggle-pass" data-acak="ag-sandun">Acak</button>
+            </div>
+            <p class="muted" style="margin:.3rem 0 0;font-size:.82rem">Wajib diisi saat menambah guru baru. Guru bisa menggantinya sendiri di halaman Profilnya.</p>
+          </div>
+          <div class="form-group">
+            <label for="ag-email">Email (opsional, untuk kontak)</label>
+            <input type="email" id="ag-email" placeholder="guru@edusmart.id">
+            <p class="muted" style="margin:.3rem 0 0;font-size:.82rem">Boleh dikosongkan. Ini hanya untuk kontak ke guru.</p>
+          </div>
+          <div class="form-group">
+            <label for="ag-jenis">Jenis Guru</label>
+            <select id="ag-jenis">
+              <option value="guru_mapel">Guru Mata Pelajaran (guru_mapel)</option>
+              <option value="wali_kelas">Wali Kelas (wali_kelas)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mata Pelajaran yang Diampu</label>
+            <div class="check-grid" id="ag-mapel-box"></div>
+          </div>
+          <div class="form-group">
+            <label>Kelas yang Diajar</label>
+            <div class="check-grid" id="ag-kelas-box"></div>
+          </div>
+          <div class="form-group">
+            <label for="ag-wali">Wali Kelas (wajib bila jenis Wali Kelas)</label>
+            <select id="ag-wali"></select>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto" id="ag-simpan">Simpan Pengaturan</button>
+            <button type="button" class="btn btn-secondary btn-auto" id="ag-baru" style="color:#1e293b;border-color:#cbd5e1">+ Tambah Guru Baru</button>
+            <button type="button" class="btn btn-secondary" id="ag-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="cari-admin-guru" placeholder="Cari nama / NIP guru...">
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Nama</th><th>Username</th><th>Jenis</th><th>Mapel</th><th>Kelas</th><th>Wali</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-guru-tbody"><tr><td colspan="8">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="form-card" id="reset-guru-box" style="max-width:100%;margin:1rem 0 0;display:none;border-color:#f59e0b">
+        <h3>Reset Password Guru</h3>
+        <p class="muted" id="reset-guru-info">Pilih tombol "Reset Password" pada tabel guru.</p>
+        <div class="form-group">
+          <label for="reset-guru-input">Password Baru</label>
+          <div class="password-wrap">
+            <input type="text" id="reset-guru-input" placeholder="Minimal 6 karakter">
+            <button type="button" class="toggle-pass" data-acak="reset-guru-input">Acak</button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="btn btn-dark btn-auto" id="reset-guru-simpan">Simpan Password Baru</button>
+          <button type="button" class="btn btn-secondary" id="reset-guru-batal" style="color:#1e293b;border-color:#cbd5e1">Batal</button>
+        </div>
+      </div>
+
+      <div class="page-head" id="kelas" style="margin-top:1.6rem">
+        <h2>Kelola Kelas</h2>
+        <p>Tambah, edit, dan hapus data kelas.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <div id="akelas-alert" class="alert" role="alert"></div>
+        <form id="form-kelas-admin" novalidate>
+          <input type="hidden" id="ak-id" value="">
+          <div class="form-group"><label for="ak-nama">Nama Kelas</label><input type="text" id="ak-nama" placeholder="Contoh: X IPA 1"></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Kelas</button>
+            <button type="button" class="btn btn-secondary" id="ak-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Nama Kelas</th><th>Jumlah Siswa</th><th>Wali Kelas</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-kelas-tbody"><tr><td colspan="5">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="jurusan" style="margin-top:1.6rem">
+        <h2>Kelola Jurusan</h2>
+        <p>Tambah, edit, dan hapus data jurusan.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <div id="ajurusan-alert" class="alert" role="alert"></div>
+        <form id="form-jurusan-admin" novalidate>
+          <input type="hidden" id="aj-id" value="">
+          <div class="form-group"><label for="aj-nama">Nama Jurusan</label><input type="text" id="aj-nama" placeholder="Contoh: IPA"></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Jurusan</button>
+            <button type="button" class="btn btn-secondary" id="aj-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Nama Jurusan</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-jurusan-tbody"><tr><td colspan="3">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="mapel" style="margin-top:1.6rem">
+        <h2>Kelola Mata Pelajaran</h2>
+        <p>Tambah, edit, dan hapus mata pelajaran.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <div id="amapel-alert" class="alert" role="alert"></div>
+        <form id="form-mapel-admin" novalidate>
+          <input type="hidden" id="am-id" value="">
+          <div class="form-group"><label for="am-nama">Nama Mata Pelajaran</label><input type="text" id="am-nama" placeholder="Contoh: Informatika"></div>
+          <div class="form-group">
+            <label for="am-track">Jalur</label>
+            <select id="am-track"><option>Bersama</option><option>IPA</option><option>IPS</option><option>Bahasa</option></select>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Mapel</button>
+            <button type="button" class="btn btn-secondary" id="am-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Mata Pelajaran</th><th>Jalur</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-mapel-tbody"><tr><td colspan="4">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="jadwal" style="margin-top:1.6rem">
+        <h2>Kelola Jadwal</h2>
+        <p>Jadwal menghubungkan kelas, mapel, dan guru (scheduleId, classId, subjectId, teacherId).</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <div id="ajadwal-alert" class="alert" role="alert"></div>
+        <form id="form-jadwal-admin" novalidate>
+          <input type="hidden" id="aja-id" value="">
+          <div class="form-group"><label for="aja-hari">Hari</label><select id="aja-hari"></select></div>
+          <div class="form-group"><label for="aja-kelas">Kelas</label><select id="aja-kelas"></select></div>
+          <div class="form-group"><label for="aja-mapel">Mata Pelajaran</label><select id="aja-mapel"></select></div>
+          <div class="form-group"><label for="aja-guru">Guru</label><select id="aja-guru"></select></div>
+          <div class="form-group"><label for="aja-mulai">Jam Mulai</label><input type="text" id="aja-mulai" placeholder="07.00"></div>
+          <div class="form-group"><label for="aja-selesai">Jam Selesai</label><input type="text" id="aja-selesai" placeholder="08.30"></div>
+          <div class="form-group"><label for="aja-ruang">Ruang</label><input type="text" id="aja-ruang" placeholder="R-01"></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Jadwal</button>
+            <button type="button" class="btn btn-secondary" id="aja-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Salin Jadwal dari Kelas Lain</h3>
+        <p class="muted">Menyalin seluruh jadwal mingguan dari satu kelas ke kelas lain. Jadwal kelas tujuan yang sudah ada akan diganti, lalu hasilnya bisa diedit satu per satu.</p>
+        <div class="toolbar">
+          <select id="salin-dari" aria-label="Kelas asal" style="max-width:220px"></select>
+          <span>&rarr;</span>
+          <select id="salin-ke" aria-label="Kelas tujuan" style="max-width:220px"></select>
+          <button type="button" class="btn btn-dark btn-auto" id="btn-salin">Salin Jadwal</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <select id="filter-kelas-ajadwal" aria-label="Filter kelas"></select>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Hari</th><th>Jam</th><th>Mapel</th><th>Kelas</th><th>Guru</th><th>Ruang</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-jadwal-tbody"><tr><td colspan="8">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="raport" style="margin-top:1.6rem">
+        <h2>Raport Digital</h2>
+        <p>Admin dapat membuat, membagikan, dan menghapus raport untuk seluruh siswa. Nilai dan absensi diambil otomatis dari data guru. Status Draft belum terlihat siswa.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Buat / Edit Raport</h3>
+        <div id="araport-alert" class="alert" role="alert"></div>
+        <form id="form-raport-admin" novalidate>
+          <input type="hidden" id="ar-id" value="">
+          <div class="form-group"><label for="ar-kelas">Kelas</label><select id="ar-kelas"></select></div>
+          <div class="form-group"><label for="ar-siswa">Pilih Siswa</label><select id="ar-siswa"></select></div>
+          <p class="muted" id="ar-pratinjau" style="margin-bottom:1rem"></p>
+          <div class="form-group"><label for="ar-semester">Semester</label><select id="ar-semester"><option value="">-- Pilih --</option><option value="1">1 (Ganjil)</option><option value="2">2 (Genap)</option></select></div>
+          <div class="form-group"><label for="ar-tahun">Tahun Ajaran</label><input type="text" id="ar-tahun" placeholder="Contoh: 2026/2027"></div>
+          <div class="form-group"><label for="ar-sikap">Sikap</label><input type="text" id="ar-sikap" placeholder="Contoh: Baik, disiplin, dan sopan"></div>
+          <div class="form-group"><label for="ar-perkembangan">Perkembangan Siswa</label><textarea id="ar-perkembangan" rows="3" placeholder="Perkembangan akademik dan non-akademik siswa..."></textarea></div>
+          <div class="form-group"><label for="ar-catatan">Catatan</label><textarea id="ar-catatan" rows="3" placeholder="Catatan untuk siswa..."></textarea></div>
+          <div class="form-group"><label for="ar-tambahan">Catatan Tambahan (opsional)</label><textarea id="ar-tambahan" rows="2"></textarea></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Raport (Draft)</button>
+            <button type="button" class="btn btn-secondary" id="ar-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="cari-raport-admin" placeholder="Cari nama siswa...">
+        <select id="filter-kelas-raport-admin" aria-label="Filter kelas"></select>
+        <select id="filter-status-raport-admin" aria-label="Filter status">
+          <option value="semua">Semua Status</option>
+          <option value="Draft">Draft</option>
+          <option value="Dibagikan">Dibagikan</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Nama Siswa</th><th>Kelas</th><th>Semester</th><th>Tahun Ajaran</th><th>Dibuat Oleh</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-raport-tbody"><tr><td colspan="8">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="kegiatan" style="margin-top:1.6rem">
+        <h2>Kelola Kegiatan</h2>
+        <p>Isi OSIS, ekstrakurikuler, dan lomba yang tampil di halaman Kegiatan publik.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Info OSIS</h3>
+        <div id="ao-alert" class="alert" role="alert"></div>
+        <form id="form-osis-admin" novalidate>
+          <div class="form-group"><label for="ao-nama">Nama Ketua OSIS</label><input type="text" id="ao-nama" placeholder="Contoh: Andini Pratiwi"></div>
+          <div class="form-group"><label for="ao-periode">Periode</label><input type="text" id="ao-periode" placeholder="Contoh: 2026/2027"></div>
+          <div class="form-group"><label for="ao-visi">Visi / Sambutan Singkat</label><textarea id="ao-visi" rows="2"></textarea></div>
+          <div class="form-group"><label for="ao-proker">Program Kerja (satu per baris)</label><textarea id="ao-proker" rows="4"></textarea></div>
+          <div class="form-group"><label for="ao-foto">Foto Ketua (opsional, ganti)</label><input type="file" id="ao-foto" accept="image/*"><p class="upload-note" id="ao-foto-note"></p></div>
+          <div class="toolbar"><button type="submit" class="btn btn-dark btn-auto">Simpan Info OSIS</button></div>
+        </form>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3 id="ak-form-title">Tambah / Edit Ekstrakurikuler</h3>
+        <div id="ak-alert" class="alert" role="alert"></div>
+        <form id="form-ekskul-admin" novalidate>
+          <input type="hidden" id="ak-id" value="">
+          <div class="form-group"><label for="ak-nama">Nama Ekstrakurikuler</label><input type="text" id="ak-nama" placeholder="Contoh: Futsal"></div>
+          <div class="form-group"><label for="ak-tag">Kategori</label><input type="text" id="ak-tag" placeholder="Contoh: Olahraga"></div>
+          <div class="form-group"><label for="ak-deskripsi">Deskripsi</label><textarea id="ak-deskripsi" rows="2"></textarea></div>
+          <div class="form-group"><label for="ak-jadwal">Jadwal Latihan</label><input type="text" id="ak-jadwal" placeholder="Contoh: Rabu 15.30"></div>
+          <div class="form-group"><label for="ak-pembina">Pembina</label><input type="text" id="ak-pembina" placeholder="Contoh: Pak Budi"></div>
+          <div class="form-group"><label for="ak-foto">Foto (opsional, ganti)</label><input type="file" id="ak-foto" accept="image/*"><p class="upload-note" id="ak-foto-note"></p></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Ekstrakurikuler</button>
+            <button type="button" class="btn btn-secondary" id="ak-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Nama</th><th>Kategori</th><th>Jadwal</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-ekskul-tbody"><tr><td colspan="5">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="form-card" style="max-width:100%;margin:1.2rem 0">
+        <h3 id="al-form-title">Tambah / Edit Lomba</h3>
+        <div id="al-alert" class="alert" role="alert"></div>
+        <form id="form-lomba-admin" novalidate>
+          <input type="hidden" id="al-id" value="">
+          <div class="form-group"><label for="al-judul">Judul Lomba / Prestasi</label><input type="text" id="al-judul" placeholder="Contoh: Olimpiade Matematika"></div>
+          <div class="form-group"><label for="al-tag">Kategori</label><input type="text" id="al-tag" placeholder="Contoh: Akademik"></div>
+          <div class="form-group"><label for="al-deskripsi">Deskripsi</label><textarea id="al-deskripsi" rows="2"></textarea></div>
+          <div class="form-group"><label for="al-foto">Foto (opsional, ganti)</label><input type="file" id="al-foto" accept="image/*"><p class="upload-note" id="al-foto-note"></p></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Lomba</button>
+            <button type="button" class="btn btn-secondary" id="al-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Judul</th><th>Kategori</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-lomba-tbody"><tr><td colspan="4">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="dummy" style="margin-top:1.6rem">
+        <h2>Data Dummy (Testing)</h2>
+        <p>Isi data contoh untuk demo: 6 kelas, 11 guru mata pelajaran, 6 guru wali kelas, dan 60 siswa (10 siswa per kelas).
+          Data akun login, nilai, tugas, dan absensi <strong>tidak</strong> dibuat di sini &mdash; sisanya diisi Admin pada menu di atas.</p>
+      </div>
+      <div id="dummy-alert" class="alert" role="alert"></div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <p class="muted" id="dummy-info">Memuat...</p>
+        <div class="toolbar">
+          <button type="button" class="btn btn-dark btn-auto" id="dummy-seed">Isi Data Dummy</button>
+          <button type="button" class="btn-danger" id="dummy-hapus">Hapus Data Dummy</button>
+        </div>
+        <p class="muted" style="margin:0">Keterangan: "Isi Data Dummy" aman dijalankan berkali-kali (data yang sudah ada tidak ditimpa).
+          "Hapus Data Dummy" hanya menghapus siswa &amp; guru dummy, data lain tetap aman.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Kelas</th><th>classId</th><th>Jumlah Siswa</th><th>Guru Mapel</th><th>Wali Kelas</th></tr></thead>
+          <tbody id="dummy-tbody"><tr><td colspan="6">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Admin. <a href="index.html">Beranda</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/seed.js"></script>
+</body>
+</html>

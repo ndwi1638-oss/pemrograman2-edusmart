@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Profil Siswa</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="siswa">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-siswa.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Siswa</small></a>
+      <span class="nav-user" id="nav-siswa-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu siswa">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Siswa</p>
+      <nav>
+        <a class="side-link" href="dashboard-siswa.html">Dashboard</a>
+        <a class="side-link active" href="profil-siswa.html">Profil Saya</a>
+        <a class="side-link" href="jadwal-pelajaran.html">Jadwal Pelajaran</a>
+        <a class="side-link" href="materi-pembelajaran.html">Materi Pembelajaran</a>
+        <a class="side-link" href="tugas.html">Tugas</a>
+        <a class="side-link" href="pengumpulan-tugas.html">Pengumpulan Tugas</a>
+        <a class="side-link" href="nilai.html">Nilai</a>
+        <a class="side-link" href="absensi.html">Absensi</a>
+        <a class="side-link" href="raport-siswa.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Profil Saya</h2>
+        <p>Data tersimpan di LocalStorage dan tetap ada setelah refresh.</p>
+      </div>
+
+      <div class="card profile-top">
+        <div class="avatar" id="pf-avatar">S</div>
+        <div>
+          <p class="muted">Tekan <strong>Edit Profil</strong> untuk mengubah data, lalu <strong>Simpan Perubahan</strong>.</p>
+        </div>
+      </div>
+
+      <div class="form-card" style="max-width:100%">
+        <div id="profil-alert" class="alert" role="alert"></div>
+        <form id="form-profil" novalidate>
+          <div class="form-group"><label for="pf-nama">Nama Lengkap</label><input type="text" id="pf-nama"></div>
+          <div class="form-group"><label for="pf-nis">NIS</label><input type="text" id="pf-nis"></div>
+          <div class="form-group"><label for="pf-email">Email (tidak dapat diubah)</label><input type="email" id="pf-email" disabled></div>
+          <div class="form-group"><label for="pf-kelas">Kelas</label><input type="text" id="pf-kelas"></div>
+          <div class="form-group"><label for="pf-jurusan">Jurusan</label><input type="text" id="pf-jurusan"></div>
+          <div class="form-group">
+            <label for="pf-jk">Jenis Kelamin</label>
+            <select id="pf-jk"><option>Laki-laki</option><option>Perempuan</option></select>
+          </div>
+          <div class="form-group"><label for="pf-ttl">Tempat/Tanggal Lahir</label><input type="text" id="pf-ttl"></div>
+          <div class="form-group"><label for="pf-alamat">Alamat</label><textarea id="pf-alamat" rows="2"></textarea></div>
+          <div class="form-group"><label for="pf-telepon">Nomor Telepon</label><input type="text" id="pf-telepon"></div>
+          <div class="toolbar">
+            <button type="button" class="btn btn-secondary" id="btn-edit" style="color:#1e293b;border-color:#cbd5e1">Edit Profil</button>
+            <button type="submit" class="btn btn-dark" style="width:auto">Simpan Perubahan</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Ubah Password</h3>
+        <p class="muted">Password diberikan Admin. Gunakan form ini untuk mengganti sendiri.</p>
+        <div id="sandun-alert" class="alert" role="alert"></div>
+        <form data-ganti-sandun data-alert="sandun-alert" novalidate>
+          <div class="form-group">
+            <label for="pw-lama">Password Lama</label>
+            <input type="password" id="pw-lama" data-pass-lama>
+          </div>
+          <div class="form-group">
+            <label for="pw-baru">Password Baru (min. 6 karakter)</label>
+            <input type="password" id="pw-baru" data-pass-baru>
+          </div>
+          <div class="form-group">
+            <label for="pw-konfirmasi">Ulangi Password Baru</label>
+            <input type="password" id="pw-konfirmasi" data-pass-konfirmasi>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Password Baru</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Siswa. <a href="dashboard-siswa.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Tugas Guru</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link active" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Kelola Tugas</h2>
+        <p>Tambah, edit, hapus tugas dan pantau status pengumpulan siswa.</p>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Tambah Tugas</h3>
+        <div id="tugas-alert" class="alert" role="alert"></div>
+        <form id="form-tugas" novalidate>
+          <input type="hidden" id="tg-id" value="">
+          <div class="form-group"><label for="tg-judul">Judul Tugas</label><input type="text" id="tg-judul"></div>
+          <div class="form-group"><label for="tg-mapel">Mata Pelajaran</label><select id="tg-mapel"></select></div>
+          <div class="form-group"><label for="tg-kelas">Kelas</label><select id="tg-kelas"></select></div>
+          <div class="form-group"><label for="tg-deadline">Deadline</label><input type="date" id="tg-deadline"></div>
+          <div class="form-group"><label for="tg-deskripsi">Deskripsi / Instruksi</label><textarea id="tg-deskripsi" rows="3"></textarea></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Tugas</button>
+            <button type="button" class="btn btn-secondary" id="tg-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <select id="filter-kelas-tugas" aria-label="Filter kelas"></select>
+        <select id="filter-mapel-tugas" aria-label="Filter mata pelajaran"></select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Judul</th><th>Mapel</th><th>Kelas</th><th>Deadline</th><th>Sudah</th><th>Belum</th><th>Aksi</th></tr></thead>
+          <tbody id="tugas-guru-tbody"><tr><td colspan="8">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="card" id="panel-kumpul" style="margin-top:1.2rem" hidden>
+        <h3 id="kumpul-judul">Pengumpulan</h3>
+        <div class="table-wrap" style="box-shadow:none">
+          <table class="table">
+            <thead><tr><th>No</th><th>Nama Siswa</th><th>File</th><th>Waktu</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="kumpul-tbody"></tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.8rem"><button type="button" class="btn btn-secondary" id="kumpul-tutup" style="color:#1e293b;border-color:#cbd5e1">Tutup</button></p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

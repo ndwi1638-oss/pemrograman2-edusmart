@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Beranda</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Edu<span>Smart</span></a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">&#9776;</button>
+      <nav class="nav-links">
+        <a href="index.html" class="active">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="program.html">Program</a>
+        <a href="jurusan.html">Jurusan</a>
+        <a href="kegiatan.html">Kegiatan</a>
+        <a href="galeri.html">Galeri</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Belajar Lebih Cerdas Bersama EduSmart</h1>
+        <p>Platform pendidikan modern untuk siswa, guru, dan admin. Kelola pembelajaran, jurusan, dan program dalam satu tempat.</p>
+        <div class="hero-actions">
+          <a href="login.html" class="btn btn-primary">Login</a>
+          <a href="program.html" class="btn btn-secondary">Lihat Program</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Kenapa Memilih EduSmart?</h2>
+        <p class="subtitle">Tiga keunggulan utama untuk pengalaman belajar terbaik.</p>
+        <div class="grid">
+          <div class="card"><h3>Pembelajaran Terstruktur</h3><p>Materi, program, dan jurusan disusun rapi sesuai jenjang dan kebutuhan siswa.</p></div>
+          <div class="card"><h3>Akses Peran Fleksibel</h3><p>Akun Siswa, Guru, dan Admin dengan hak akses berbeda yang tersimpan aman di LocalStorage.</p></div>
+          <div class="card"><h3>Responsif di Semua Perangkat</h3><p>Tampilan optimal di laptop, tablet, dan HP tanpa framework tambahan.</p></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>500+</strong>Materi Belajar</div>
+          <div class="stat"><strong>50+</strong>Guru Aktif</div>
+          <div class="stat"><strong>6</strong>Program Unggulan</div>
+          <div class="stat"><strong>8</strong>Jurusan Tersedia</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Program Unggulan</h2>
+        <p class="subtitle">Contoh program yang bisa diikuti setelah mendaftar.</p>
+        <div class="grid">
+          <div class="card"><span class="tag">Populer</span><h3>Kelas Reguler</h3><p>Pembelajaran harian interaktif untuk semua jenjang.</p><p style="margin-top:0.6rem"><a href="program.html?program=reguler">Lihat Detail &rarr;</a></p></div>
+          <div class="card"><span class="tag">Online</span><h3>Kelas Daring</h3><p>Belajar fleksibel dari mana saja dengan materi digital.</p><p style="margin-top:0.6rem"><a href="program.html?program=daring">Lihat Detail &rarr;</a></p></div>
+          <div class="card"><span class="tag">Beasiswa</span><h3>Beasiswa Prestasi</h3><p>Kesempatan beasiswa bagi siswa berprestasi akademik.</p><p style="margin-top:0.6rem"><a href="program.html?program=beasiswa">Lihat Detail &rarr;</a></p></div>
+        </div>
+      </div>
+    <section class="section">
+      <div class="container">
+        <h2>Tim Pengembang EduSmart</h2>
+        <p class="subtitle">Website ini dikembangkan sebagai media pembelajaran dan sistem informasi pendidikan.</p>
+        <div class="grid">
+          <div class="card team-card">
+            <div class="team-photo-wrap"><span class="team-initial">P1</span><img class="team-photo" src="dimas.jpeg" alt="Foto Nama Pembuat 1" data-photo-fallback data-team-photo="pembuat1"></div>
+            <h3>Dimas</h3>
+            <p class="team-nim">NIM: 231011450720</p>
+            <p style="margin-top:0.7rem"><label class="btn-upload">Ganti Foto<input type="file" data-team-upload="pembuat1" accept="image/*" hidden></label></p>
+            <p class="upload-note" id="note-pembuat1"></p>
+          </div>
+          <div class="card team-card">
+            <div class="team-photo-wrap"><span class="team-initial">P2</span><img class="team-photo" src="fanesha.jpeg" alt="Foto Nama Pembuat 2" data-photo-fallback data-team-photo="pembuat2"></div>
+            <h3>Fanesha Rahayu</h3>
+            <p class="team-nim">NIM: 231011450137</p>
+            <p style="margin-top:0.7rem"><label class="btn-upload">Ganti Foto<input type="file" data-team-upload="pembuat2" accept="image/*" hidden></label></p>
+            <p class="upload-note" id="note-pembuat2"></p>
+          </div>
+          <div class="card team-card">
+            <div class="team-photo-wrap"><span class="team-initial">P3</span><img class="team-photo" src="nurul.jpeg" alt="Foto Nama Pembuat 3" data-photo-fallback data-team-photo="pembuat3"></div>
+            <h3>Nurul Dwi Wahyuni</h3>
+            <p class="team-nim">NIM: 231011450142</p>
+            <p style="margin-top:0.7rem"><label class="btn-upload">Ganti Foto<input type="file" data-team-upload="pembuat3" accept="image/*" hidden></label></p>
+            <p class="upload-note" id="note-pembuat3"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><h4>EduSmart</h4><p>Platform pendidikan modern untuk masa depan cerah.</p><p id="nav-auth-state" class="nav-user"></p></div>
+      <div><h4>Navigasi</h4><p><a href="tentang.html">Tentang</a> &middot; <a href="program.html">Program</a> &middot; <a href="jurusan.html">Jurusan</a> &middot; <a href="kegiatan.html">Kegiatan</a> &middot; <a href="kontak.html">Kontak</a></p></div>
+      <div><h4>Akun</h4><p><a href="login.html">Login</a></p><p>info@edusmart.id</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 EduSmart. Tahap 1 - HTML, CSS, JS Vanilla, LocalStorage.</div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></scri
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Program Pendidikan</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Edu<span>Smart</span></a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">&#9776;</button>
+      <nav class="nav-links">
+        <a href="index.html">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="program.html" class="active">Program</a>
+        <a href="jurusan.html">Jurusan</a>
+        <a href="kegiatan.html">Kegiatan</a>
+        <a href="galeri.html">Galeri</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Program Pendidikan</h1>
+        <p>Pilih program belajar sesuai gaya dan kebutuhanmu.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Daftar Program</h2>
+        <p class="subtitle">Enam program utama EduSmart tahap pertama. Klik salah satu untuk melihat detail, foto, dan kriterianya.</p>
+        <div class="grid" id="program-grid">
+          <div class="card" data-program-card="reguler"><span class="tag">Reguler</span><h3>Kelas Reguler</h3><p>Pembelajaran tatap muka terjadwal dengan kurikulum nasional.</p><p style="margin-top:0.6rem"><button type="button" class="btn-link" data-program-lihat="reguler">Lihat Detail &rarr;</button></p></div>
+          <div class="card" data-program-card="unggulan"><span class="tag">Unggulan</span><h3>Kelas Unggulan</h3><p>Pendalaman materi untuk persiapan olimpiade dan ujian masuk.</p><p style="margin-top:0.6rem"><button type="button" class="btn-link" data-program-lihat="unggulan">Lihat Detail &rarr;</button></p></div>
+          <div class="card" data-program-card="daring"><span class="tag">Online</span><h3>Kelas Daring</h3><p>Materi video, kuis interaktif, dan diskusi online.</p><p style="margin-top:0.6rem"><button type="button" class="btn-link" data-program-lihat="daring">Lihat Detail &rarr;</button></p></div>
+          <div class="card" data-program-card="bahasa"><span class="tag">Bahasa</span><h3>Kursus Bahasa</h3><p>Inggris, Arab, dan Jepang dari level dasar hingga mahir.</p><p style="margin-top:0.6rem"><button type="button" class="btn-link" data-program-lihat="bahasa">Lihat Detail &rarr;</button></p></div>
+          <div class="card" data-program-card="it"><span class="tag">Keterampilan</span><h3>Pelatihan IT</h3><p>Dasar komputer, desain, dan pemrograman web (HTML/CSS/JS).</p><p style="margin-top:0.6rem"><button type="button" class="btn-link" data-program-lihat="it">Lihat Detail &rarr;</button></p></div>
+          <div class="card" data-program-card="beasiswa"><span class="tag">Beasiswa</span><h3>Beasiswa Prestasi</h3><p>Potongan biaya bagi siswa berprestasi akademik dan non-akademik.</p><p style="margin-top:0.6rem"><button type="button" class="btn-link" data-program-lihat="beasiswa">Lihat Detail &rarr;</button></p></div>
+        </div>
+        <div id="program-detail" style="margin-top:1.4rem" hidden></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><h4>EduSmart</h4><p>Platform pendidikan modern untuk masa depan cerah.</p><p id="nav-auth-state" class="nav-user"></p></div>
+      <div><h4>Navigasi</h4><p><a href="index.html">Beranda</a> &middot; <a href="tentang.html">Tentang</a> &middot; <a href="jurusan.html">Jurusan</a> &middot; <a href="kegiatan.html">Kegiatan</a> &middot; <a href="kontak.html">Kontak</a></p></div>
+      <div><h4>Akun</h4><p><a href="login.html">Login</a></p><p>info@edusmart.id</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 EduSmart. Tahap 1 - HTML, CSS, JS Vanilla, LocalStorage.</div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

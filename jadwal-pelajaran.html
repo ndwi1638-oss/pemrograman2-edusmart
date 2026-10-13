@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Jadwal Pelajaran</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="siswa">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-siswa.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Siswa</small></a>
+      <span class="nav-user" id="nav-siswa-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu siswa">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Siswa</p>
+      <nav>
+        <a class="side-link" href="dashboard-siswa.html">Dashboard</a>
+        <a class="side-link" href="profil-siswa.html">Profil Saya</a>
+        <a class="side-link active" href="jadwal-pelajaran.html">Jadwal Pelajaran</a>
+        <a class="side-link" href="materi-pembelajaran.html">Materi Pembelajaran</a>
+        <a class="side-link" href="tugas.html">Tugas</a>
+        <a class="side-link" href="pengumpulan-tugas.html">Pengumpulan Tugas</a>
+        <a class="side-link" href="nilai.html">Nilai</a>
+        <a class="side-link" href="absensi.html">Absensi</a>
+        <a class="side-link" href="raport-siswa.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Jadwal Pelajaran</h2>
+        <p>Filter jadwal berdasarkan hari. Geser tabel ke samping pada layar HP.</p>
+        <p class="muted" id="jadwal-jurusan-info"></p>
+      </div>
+
+      <div class="toolbar">
+        <select id="filter-hari" aria-label="Filter hari">
+          <option value="Semua">Semua Hari</option>
+          <option value="Senin">Senin</option>
+          <option value="Selasa">Selasa</option>
+          <option value="Rabu">Rabu</option>
+          <option value="Kamis">Kamis</option>
+          <option value="Jumat">Jumat</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Hari</th><th>Jam</th><th>Mata Pelajaran</th><th>Guru</th><th>Ruang</th></tr></thead>
+          <tbody id="jadwal-tbody"><tr><td colspan="5">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Siswa. <a href="dashboard-siswa.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

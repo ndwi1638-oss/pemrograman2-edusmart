@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Absensi Guru</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link active" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Absensi Siswa</h2>
+        <p>Khusus wali kelas. Pilih tanggal, lalu tentukan status kehadiran siswa kelas binaan untuk hari itu.</p>
+      </div>
+
+      <div id="absensi-alert" class="alert" role="alert"></div>
+
+      <div class="toolbar" id="abs-toolbar">
+        <input type="date" id="abs-tanggal" aria-label="Pilih tanggal">
+        <button class="btn btn-dark btn-auto" id="abs-muat" type="button">Tampilkan Siswa</button>
+      </div>
+      <p class="muted" id="abs-info" style="margin-bottom:1rem"></p>
+
+      <form id="form-absensi" hidden>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>No</th><th>Nama Siswa</th><th>Status</th></tr></thead>
+            <tbody id="abs-tbody"><tr><td colspan="3">Memuat...</td></tr></tbody>
+          </table>
+        </div>
+        <p style="margin-top:0.8rem"><button type="submit" class="btn btn-dark btn-auto">Simpan Absensi</button></p>
+      </form>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

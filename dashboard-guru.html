@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Dashboard Guru</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link active" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Dashboard Guru</h2>
+        <p>Ringkasan aktivitas mengajar Anda.</p>
+      </div>
+
+      <div class="card profile-top">
+        <div class="avatar" id="g-avatar">G</div>
+        <div>
+          <h3 id="g-nama">Memuat...</h3>
+          <p class="muted" id="g-nip">Memuat...</p>
+          <p><span class="badge b-blue" id="g-jenis">-</span></p>
+          <p class="muted">Mapel: <span id="g-mapel">-</span></p>
+          <p class="muted">Kelas: <span id="g-kelas">-</span></p>
+          <p class="muted" id="g-hak"></p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong id="stat-gsiswa">-</strong>Jumlah Siswa</div>
+        <div class="stat"><strong id="stat-gtugas">-</strong>Jumlah Tugas</div>
+        <div class="stat"><strong id="stat-gmateri">-</strong>Jumlah Materi</div>
+        <div class="stat"><strong id="stat-gnilai">-</strong>Jumlah Penilaian</div>
+        <div class="stat"><strong id="stat-gkumpul">-</strong>Pengumpulan Tugas</div>
+      </div>
+
+      <div class="grid" style="margin-top:1.2rem">
+        <div class="card">
+          <h3>Ringkasan Absensi</h3>
+          <p class="muted" id="g-absensi">Memuat...</p>
+          <p style="margin-top:0.6rem"><a href="absensi-guru.html">Input absensi &rarr;</a></p>
+        </div>
+        <div class="card">
+          <h3>Akses Cepat</h3>
+          <div class="quick-links">
+            <a class="btn btn-dark btn-auto" href="penilaian-guru.html">Input Nilai</a>
+            <a class="btn btn-dark btn-auto" href="materi-guru.html">Kelola Materi</a>
+            <a class="btn btn-dark btn-auto" href="tugas-guru.html">Kelola Tugas</a>
+            <a class="btn btn-dark btn-auto" href="kelas-guru.html">Lihat Kelas</a>
+            <a class="btn btn-dark btn-auto" href="raport-guru.html">Raport Digital</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="index.html">Beranda</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

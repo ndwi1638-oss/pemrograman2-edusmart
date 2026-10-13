@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Data Siswa</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-guard="guru">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="dashboard-guru.html" class="logo">Edu<span>Smart</span> <small class="logo-sub">Guru</small></a>
+      <span class="nav-user" id="nav-guru-nama"></span>
+      <button class="nav-toggle" id="sideToggle" aria-label="Buka menu guru">&#9776;</button>
+    </div>
+  </header>
+
+  <div class="container shell">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-title">Menu Guru</p>
+      <nav>
+        <a class="side-link" href="dashboard-guru.html">Dashboard</a>
+        <a class="side-link" href="profil-guru.html">Profil Guru</a>
+        <a class="side-link" href="kelas-guru.html">Kelas</a>
+        <a class="side-link active" href="data-siswa.html">Data Siswa</a>
+        <a class="side-link" href="materi-guru.html">Materi</a>
+        <a class="side-link" href="tugas-guru.html">Tugas</a>
+        <a class="side-link" href="penilaian-guru.html">Penilaian</a>
+        <a class="side-link" href="absensi-guru.html">Absensi</a>
+        <a class="side-link" href="jadwal-guru.html">Jadwal</a>
+        <a class="side-link" href="raport-guru.html">Raport Digital</a>
+      </nav>
+      <button class="side-logout" id="btn-logout">Logout</button>
+    </aside>
+
+    <main class="content">
+      <div class="page-head">
+        <h2>Data Siswa</h2>
+        <p>Sumber utama data siswa (edusmart_students). Perubahan di sini otomatis terbaca di Kelas, Penilaian, Absensi, dan halaman siswa.</p>
+      </div>
+
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3 id="sw-form-title">Tambah Siswa</h3>
+        <div id="siswa-alert" class="alert" role="alert"></div>
+        <form id="form-siswa" novalidate>
+          <input type="hidden" id="sw-id" value="">
+          <div class="form-group"><label for="sw-nis">NIS/NISN</label><input type="text" id="sw-nis" placeholder="Contoh: 2026011"></div>
+          <div class="form-group"><label for="sw-nama">Nama Lengkap</label><input type="text" id="sw-nama" placeholder="Contoh: Andi Pratama"></div>
+          <div class="form-group"><label for="sw-email">Email (opsional, untuk kontak)</label><input type="email" id="sw-email" placeholder="nama@email.com"></div>
+          <div class="form-group">
+            <label for="sw-jk">Jenis Kelamin</label>
+            <select id="sw-jk"><option value="">-- Pilih --</option><option>Laki-laki</option><option>Perempuan</option></select>
+          </div>
+          <div class="form-group"><label for="sw-kelas">Kelas</label><select id="sw-kelas"></select></div>
+          <div class="form-group"><label for="sw-alamat">Alamat</label><textarea id="sw-alamat" rows="2"></textarea></div>
+          <div class="form-group"><label for="sw-telepon">No. Telepon</label><input type="text" id="sw-telepon"></div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Siswa</button>
+            <button type="button" class="btn btn-secondary" id="sw-batal" style="color:#1e293b;border-color:#cbd5e1" hidden>Batal</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="cari-siswa" placeholder="Cari nama / NIS...">
+        <select id="filter-kelas-siswa" aria-label="Filter kelas"></select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>NIS/NISN</th><th>Nama Siswa</th><th>Jenis Kelamin</th><th>Kelas</th><th>Email</th><th>Aksi</th></tr></thead>
+          <tbody id="ds-tbody"><tr><td colspan="7">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div class="lightbox" id="modal-siswa" role="dialog" aria-label="Detail siswa">
+    <div class="lightbox-box">
+      <button class="lightbox-close" id="modal-close" aria-label="Tutup detail">&times;</button>
+      <h3 id="modal-nama"></h3>
+      <div id="modal-isi"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">&copy; 2026 EduSmart &mdash; Area Guru. <a href="dashboard-guru.html">Dashboard</a></div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/guru.js"></script>
+</body>
+</html>

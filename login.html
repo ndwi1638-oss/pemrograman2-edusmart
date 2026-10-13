@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSmart - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">Edu<span>Smart</span></a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">&#9776;</button>
+      <nav class="nav-links">
+        <a href="index.html">Beranda</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="program.html">Program</a>
+        <a href="jurusan.html">Jurusan</a>
+        <a href="kegiatan.html">Kegiatan</a>
+        <a href="galeri.html">Galeri</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="login.html" class="active">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container form-wrap">
+        <div class="form-card">
+          <h2>Login Akun</h2>
+          <p class="desc">Masuk sesuai role: Siswa, Guru, atau Admin.</p>
+          <div id="login-alert" class="alert" role="alert"></div>
+          <form id="form-login" novalidate>
+            <div class="form-group">
+              <label for="login-username">Username</label>
+              <input type="text" id="login-username" placeholder="NIS/NISN (siswa) atau NIP (guru)" required>
+              <p class="muted" style="margin:.3rem 0 0;font-size:.82rem">Siswa memakai NIS/NISN, guru memakai NIP/NUPTK, admin memakai <strong>admin</strong>.</p>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <div class="password-wrap">
+                <input type="password" id="login-password" placeholder="Password Anda" required>
+                <button type="button" class="toggle-pass" data-toggle-pass="login-password">Lihat</button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark">Login</button>
+          </form>
+          <p class="form-foot">Belum punya akun? Password diberikan oleh Admin sekolah (username = NIS/NISN atau NIP/NUPTK).</p>
+          <div class="demo-box">
+            <strong>Akun Admin:</strong><br>
+            admin / admin123<br>
+            <span class="muted">Akun siswa &amp; guru dibuat oleh Admin dari Dashboard Admin. Setelah login, password bisa diganti sendiri di halaman Profil.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><h4>EduSmart</h4><p>Platform pendidikan modern untuk masa depan cerah.</p><p id="nav-auth-state" class="nav-user"></p></div>
+      <div><h4>Navigasi</h4><p><a href="index.html">Beranda</a> &middot; <a href="tentang.html">Tentang</a> &middot; <a href="program.html">Program</a> &middot; <a href="kegiatan.html">Kegiatan</a> &middot; <a href="kontak.html">Kontak</a></p></div>
+      <div><h4>Akun</h4><p><a href="login.html">Login</a> &middot; <a href="jurusan.html">Jurusan</a></p><p>info@edusmart.id</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 EduSmart. Tahap 1 - HTML, CSS, JS Vanilla, LocalStorage.</div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
