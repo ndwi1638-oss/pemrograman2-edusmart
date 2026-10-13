@@ -4,57 +4,52 @@ Tujuan: supaya **foto dan data yang di-ubah admin** (galeri, foto tim, beasiswa,
 OSIS, data siswa/guru, dll) **tampil untuk semua orang di semua perangkat** —
 bukan hanya di browser tempat admin meng-upload.
 
-Cukup dilakukan **sekali**. Gratis.
+Cukup dilakukan **sekali**, gratis, ± 3 menit. Kamu hanya butuh **1 alamat**.
 
 ---
 
 ## Langkah 1 — Buat project Firebase
 
-1. Buka <https://console.firebase.google.com>
-2. Klik **Add project** / **Tambahkan project**.
-3. Beri nama (mis. `edusmart`), lanjutkan sampai **Create project**.
+1. Buka <https://console.firebase.google.com> dan masuk dengan akun Google.
+2. Klik **Create a project** / **Buat project**.
+3. Beri nama apa saja (mis. `edusmart`), lanjutkan sampai **Create project**.
+   (Google Analytics boleh dimatikan.)
 
 ## Langkah 2 — Nyalakan Realtime Database
 
-1. Di menu kiri pilih **Build > Realtime Database**.
+1. Di menu kiri klik **Build > Realtime Database**.
 2. Klik **Create Database**.
-3. Pilih lokasi terdekat (mis. **Singapore / asia-southeast1**).
-4. Mulai dengan **Test mode**, lalu **Enable**.
+3. Pilih lokasi terdekat: **Singapore (asia-southeast1)**.
+4. Pilih **Start in test mode**, lalu klik **Enable**.
 
-## Langkah 3 — Ambil konfigurasi
+## Langkah 3 — Salin ALAMAT database
 
-1. Klik ikon **gerigi** (kiri atas) > **Project settings**.
-2. Tab **General** > gulir ke **Your apps**.
-3. Klik ikon **Web** `< / >`, beri nama app (bebas), klik **Register app**.
-4. Akan muncul objek `firebaseConfig`. Salin nilai-nilainya.
+Setelah database terbuka, lihat bagian **paling atas**. Di sana tertulis alamat
+seperti:
 
-## Langkah 4 — Tempel ke file
+```
+https://edusmart-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app
+```
 
-Buka file **`js/firebase-config.js`**, isi bagian `config` dengan nilai yang
-kamu salin, **dan ubah `enabled: false` menjadi `enabled: true`**.
+**Itu satu-satunya nilai yang dibutuhkan.** Salin.
+
+## Langkah 4 — Tempel ke file konfigurasi
+
+Buka file **`js/firebase-config.js`**, tempel alamat tadi, dan ubah
+`enabled: false` menjadi `enabled: true`:
 
 ```js
 window.EDUSMART_FIREBASE = {
-  enabled: true,                       // <-- ubah menjadi true
-  config: {
-    apiKey: "AIza....",
-    authDomain: "edusmart-xxxx.firebaseapp.com",
-    databaseURL: "https://edusmart-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "edusmart-xxxx",
-    storageBucket: "edusmart-xxxx.appspot.com",
-    messagingSenderId: "1234567890",
-    appId: "1:1234567890:web:abcdef"
-  }
+  enabled: true,
+  databaseURL: "https://edusmart-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 ```
-
-> Catatan: `databaseURL` **wajib ada**. Itu alamat Realtime Database dari Langkah 2.
 
 ## Langkah 5 — Simpan, commit, push
 
 ```bash
 git add js/firebase-config.js
-git commit -m "aktifkan Firebase"
+git commit -m "aktifkan penyimpanan awan"
 git push
 ```
 
@@ -86,12 +81,12 @@ Agar database tidak terkunci otomatis setelah 30 hari:
   **otomatis di-upload**, sehingga foto yang sudah terlanjur di-upload ikut tampil.
 - Setiap perubahan admin langsung dikirim ke Firebase.
 
-## Catatan keamanan
+## Catatan
 
-- `apiKey` di file ini memang tampil di web; itu wajar untuk Firebase web.
-  Yang mengatur keamanan adalah **Rules** di Langkah 6.
 - Sesi login tetap tersimpan per-browser, jadi admin di Chrome dan guru di Edge
   tidak saling menimpa.
+- Data siswa/guru ikut tersimpan (agar beasiswa & OSIS nyambung lintas perangkat),
+  jadi sebaiknya jangan isi data sensitif asli. Cocok untuk tugas/demo.
 
 ## Bila ingin mematikan kembali
 

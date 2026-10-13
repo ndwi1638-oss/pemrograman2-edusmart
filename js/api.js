@@ -82,7 +82,7 @@
   /* Bila js/remote.js mengaktifkan penyimpanan awan (Firebase), semua tulis
      dialihkan ke sana. Kalau tidak, tetap memakai server /api/data. */
   function pakaiAwan() {
-    return !!(window.EduSmartRemote && window.EduSmartRemote.aktif && window.EduSmartRemote.ref);
+    return !!(window.EduSmartRemote && window.EduSmartRemote.aktif);
   }
 
   function kirim(key, value) {

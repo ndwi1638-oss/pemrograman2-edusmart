@@ -1,44 +1,42 @@
 /* ==========================================================================
    EduSmart - js/firebase-config.js | KONFIGURASI PENYIMPANAN AWAN
    --------------------------------------------------------------------------
-   >>> HANYA FILE INI YANG PERLU KAMU EDIT. <<<
+   >>> HANYA FILE INI YANG PERLU KAMU ISI, DAN HANYA 1 BARIS. <<<
 
-   Tujuan fitur ini: foto & data yang di-ubah admin (galeri, foto tim,
-   beasiswa, OSIS, data siswa/guru, dll) tersimpan di server Firebase dan
-   TAMPIL UNTUK SEMUA ORANG di semua perangkat - bukan cuma di browser admin.
+   Tujuan: foto & data yang di-ubah admin (galeri, foto tim, beasiswa, OSIS,
+   data siswa/guru, dll) tersimpan di server dan TAMPIL UNTUK SEMUA ORANG di
+   semua perangkat - bukan cuma di browser admin.
 
    --------------------------------------------------------------------------
-   LANGKAH-LANGKAH (sekali saja, gratis):
-     1. Buka https://console.firebase.google.com  ->  "Add project".
-        Beri nama (mis. edusmart), lanjutkan sampai selesai.
-     2. Di menu kiri pilih "Build" > "Realtime Database" > "Create Database".
-        Pilih lokasi terdekat (mis. Singapore), lalu mulai dengan "Test mode".
-     3. Kembali ke "Project settings" (ikon gerigi di kiri atas) > tab
-        "General" > gulir ke "Your apps" > klik ikon Web ( </> ).
-        Daftarkan app (nama bebas), lalu akan muncul objek `firebaseConfig`.
-     4. Salin nilai dari `firebaseConfig` ke objek `config` di bawah ini
-        (biarkan tanda kutip), lalu ubah `enabled: false` menjadi `true`.
-     5. Simpan, lalu commit & push. Selesai.
-     6. (Disarankan) Di Realtime Database > tab "Rules", ganti isinya menjadi:
+   CARA MENDAPATKAN ALAMATNYA (sekali saja, gratis, ± 3 menit):
+     1. Buka https://console.firebase.google.com
+        Masuk dengan akun Google.
+     2. Klik "Create a project" / "Buat project". Beri nama apa saja
+        (mis. edusmart), klik Continue sampai selesai (Google Analytics
+        boleh dimatikan).
+     3. Di menu kiri, klik "Build" > "Realtime Database".
+        Klik "Create Database".
+        - Pilih lokasi terdekat: Singapore (asia-southeast1).
+        - Pilih "Start in test mode", lalu klik Enable.
+     4. Setelah database terbuka, lihat bagian paling atas. Di sana tertulis
+        alamat seperti:
+            https://edusmart-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app
+        Selamat, ITU alamat yang dibutuhkan. Salin.
+     5. Tempel alamat itu ke dalam tanda kutip di bawah, dan ubah
+        enabled: false menjadi enabled: true.
+     6. Simpan file, lalu (kalau pakai Git) commit & push. Selesai.
+     7. Disarankan: tab "Rules" di halaman database, isi dengan
             { "rules": { ".read": true, ".write": true } }
-        lalu "Publish". Ini mencegah database terkunci otomatis setelah 30 hari.
-        Catatan: aturan ini membuka akses untuk siapa saja (cukup untuk tugas
-        sekolah). Untuk penggunaan serius, batasi nanti.
+        lalu Publish. Ini supaya database tidak terkunci otomatis 30 hari.
 
-   TIPS: file ini AMAN dibagikan. Kunci seperti apiKey memang tampil di web
-   (memang begitu cara kerja Firebase web), yang mengatur keamanan adalah
-   "Rules" di langkah 6, bukan kerahasiaan file ini.
+   CONTOH HASIL AKHIR:
+     window.EDUSMART_FIREBASE = {
+       enabled: true,
+       databaseURL: "https://edusmart-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app"
+     };
    ========================================================================== */
 
 window.EDUSMART_FIREBASE = {
   enabled: false,
-  config: {
-    apiKey: "ISI_API_KEY",
-    authDomain: "ISI.firebaseapp.com",
-    databaseURL: "https://ISI-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "ISI_PROJECT_ID",
-    storageBucket: "ISI.appspot.com",
-    messagingSenderId: "ISI_SENDER_ID",
-    appId: "ISI_APP_ID"
-  }
+  databaseURL: ""
 };
