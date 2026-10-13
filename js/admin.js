@@ -23,6 +23,7 @@ var A_REPORTS_KEY = "edusmart_reports";
 var A_OSIS_KEY = "edusmart_osis";
 var A_EKSKUL_KEY = "edusmart_ekskul";
 var A_LOMBA_KEY = "edusmart_lomba";
+var A_BEASISWA_KEY = "edusmart_beasiswa";
 
 /* ---------- Helper ---------- */
 function aGet(key) {
@@ -316,6 +317,8 @@ function renderAdminSiswa() {
       "<button class='btn-small btn-secondary' style='color:#1e293b;border-color:#cbd5e1' data-adm-siswa-sandun='" + s.studentId + "'>Reset Password</button> " +
       "<button class='btn-danger' data-adm-siswa-hapus='" + s.studentId + "'>Hapus</button></td></tr>";
   }).join("") || "<tr><td colspan='6'>Belum ada data siswa.</td></tr>";
+  /* Beri tahu modul lain (mis. dropdown Beasiswa) bahwa daftar siswa berubah. */
+  document.dispatchEvent(new Event("edusmart:siswa-berubah"));
 }
 
 function initAdminSiswa() {
@@ -1464,6 +1467,108 @@ function initAdminGaleri() {
   render();
 }
 
+/* ---------- Kelola Beasiswa ---------- */
+function initAdminBeasiswa() {
+  var form = document.getElementById("form-beasiswa-admin");
+  if (!form) return;
+  var selSiswa = document.getElementById("abs-siswa");
+  var tbody = document.getElementById("admin-beasiswa-tbody");
+  var cari = document.getElementById("cari-admin-beasiswa");
+
+  /* Isi dropdown siswa dikelompokkan per kelas. */
+  function isiSiswa() {
+    var terpilih = selSiswa.value;
+    var siswa = aGet(A_STUDENTS_KEY);
+    var kelas = aGet(A_CLASSES_KEY);
+    var html = "<option value=''>-- Pilih Siswa --</option>";
+    kelas.forEach(function (k) {
+      var anggota = siswa.filter(function (s) { return s.classId === k.classId; });
+      if (!anggota.length) return;
+      html += "<optgroup label='" + aEsc(k.nama) + "'>";
+      anggota.forEach(function (s) {
+        html += "<option value='" + aEsc(s.studentId) + "'>" + aEsc(s.nama) + " (" + aEsc(s.nis || "-") + ")</option>";
+      });
+      html += "</optgroup>";
+    });
+    var tanpa = siswa.filter(function (s) { return !s.classId || !aClassById(s.classId); });
+    if (tanpa.length) {
+      html += "<optgroup label='Tanpa Kelas'>";
+      tanpa.forEach(function (s) {
+        html += "<option value='" + aEsc(s.studentId) + "'>" + aEsc(s.nama) + " (" + aEsc(s.nis || "-") + ")</option>";
+      });
+      html += "</optgroup>";
+    }
+    selSiswa.innerHTML = html;
+    if (terpilih) selSiswa.value = terpilih;
+  }
+
+  function render() {
+    var q = ((cari && cari.value) || "").toLowerCase();
+    var arr = aGet(A_BEASISWA_KEY).filter(function (b) {
+      return !q || (b.nama || "").toLowerCase().indexOf(q) !== -1 || (b.namaBeasiswa || "").toLowerCase().indexOf(q) !== -1;
+    });
+    if (!arr.length) {
+      tbody.innerHTML = "<tr><td colspan='7'>Belum ada beasiswa yang diberikan.</td></tr>";
+      return;
+    }
+    tbody.innerHTML = arr.map(function (b, i) {
+      return "<tr>" +
+        "<td>" + (i + 1) + "</td>" +
+        "<td>" + aEsc(b.nama) + "<br><span class='muted' style='font-size:.8rem'>" + aEsc(b.nis || "-") + "</span></td>" +
+        "<td>" + aEsc(aClassName(b.classId)) + "</td>" +
+        "<td>" + aEsc(b.namaBeasiswa) + (b.nominal ? "<br><span class='muted' style='font-size:.8rem'>" + aEsc(b.nominal) + "</span>" : "") + "</td>" +
+        "<td>" + aEsc(b.tahun || "-") + "</td>" +
+        "<td>" + (b.dibaca ? "Sudah" : "<span class='tag'>Belum</span>") + "</td>" +
+        "<td><button type='button' class='btn-reset' data-beasiswa-hapus='" + aEsc(b.id) + "'>Hapus</button></td>" +
+        "</tr>";
+    }).join("");
+  }
+
+  if (cari) cari.addEventListener("input", render);
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var sid = selSiswa.value;
+    var st = aGet(A_STUDENTS_KEY).filter(function (s) { return s.studentId === sid; })[0];
+    var namaBeasiswa = document.getElementById("abs-nama").value.trim();
+    if (!st) { showAlert("abs-alert", "Pilih siswa penerima terlebih dahulu.", "error"); return; }
+    if (!namaBeasiswa) { showAlert("abs-alert", "Nama beasiswa wajib diisi.", "error"); return; }
+    var arr = aGet(A_BEASISWA_KEY);
+    arr.unshift({
+      id: aUid("BSW"),
+      studentId: st.studentId, nis: st.nis || "", nama: st.nama || "", classId: st.classId || "",
+      namaBeasiswa: namaBeasiswa,
+      jenis: document.getElementById("abs-jenis").value,
+      nominal: document.getElementById("abs-nominal").value.trim(),
+      tahun: document.getElementById("abs-tahun").value.trim(),
+      keterangan: document.getElementById("abs-keterangan").value.trim(),
+      tanggal: aToday(), dibaca: false, createdAt: new Date().toISOString()
+    });
+    aSet(A_BEASISWA_KEY, arr);
+    form.reset();
+    isiSiswa();
+    showAlert("abs-alert", "Beasiswa untuk " + st.nama + " tersimpan. Siswa akan melihat pemberitahuan di akunnya.", "success");
+    render();
+  });
+
+  tbody.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-beasiswa-hapus]") : null;
+    if (!btn) return;
+    if (!window.confirm("Hapus data beasiswa ini?")) return;
+    aSet(A_BEASISWA_KEY, aGet(A_BEASISWA_KEY).filter(function (b) { return b.id !== btn.getAttribute("data-beasiswa-hapus"); }));
+    showAlert("abs-alert", "Data beasiswa dihapus.", "success");
+    render();
+  });
+
+  isiSiswa();
+  render();
+
+  /* Segarkan daftar siswa saat berubah / saat bagian ini dibuka. */
+  document.addEventListener("edusmart:siswa-berubah", isiSiswa);
+  selSiswa.addEventListener("focus", isiSiswa);
+  document.querySelectorAll('a[href="#beasiswa"]').forEach(function (a) { a.addEventListener("click", isiSiswa); });
+}
+
 /* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", function () {
   aSeed();
@@ -1484,4 +1589,5 @@ document.addEventListener("DOMContentLoaded", function () {
   initAdminRaport();
   initAdminKegiatan();
   initAdminGaleri();
+  initAdminBeasiswa();
 });

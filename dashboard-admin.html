@@ -31,6 +31,7 @@
         <a class="side-link" href="#raport">Raport Digital</a>
         <a class="side-link" href="#kegiatan">Kelola Kegiatan</a>
         <a class="side-link" href="#galeri">Kelola Galeri</a>
+        <a class="side-link" href="#beasiswa">Kelola Beasiswa</a>
         <a class="side-link" href="#dummy">Data Dummy</a>
       </nav>
       <button class="side-logout" id="btn-logout">Logout</button>
@@ -474,6 +475,59 @@
         <table class="table">
           <thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Aksi</th></tr></thead>
           <tbody id="admin-galeri-tbody"><tr><td colspan="4">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="beasiswa" style="margin-top:1.6rem">
+        <h2>Kelola Beasiswa</h2>
+        <p>Berikan beasiswa kepada siswa. Siswa penerima akan melihat <strong>pemberitahuan</strong> di dashboard akunnya.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Beri Beasiswa</h3>
+        <div id="abs-alert" class="alert" role="alert"></div>
+        <form id="form-beasiswa-admin" novalidate>
+          <div class="form-group">
+            <label for="abs-siswa">Siswa Penerima</label>
+            <select id="abs-siswa"></select>
+          </div>
+          <div class="form-group">
+            <label for="abs-nama">Nama Beasiswa</label>
+            <input type="text" id="abs-nama" placeholder="Contoh: Beasiswa Prestasi Akademik">
+          </div>
+          <div class="form-group">
+            <label for="abs-jenis">Jenis</label>
+            <select id="abs-jenis">
+              <option value="Prestasi">Prestasi</option>
+              <option value="Kurang Mampu">Kurang Mampu</option>
+              <option value="Olahraga">Olahraga</option>
+              <option value="Seni">Seni</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="abs-nominal">Besar Beasiswa (opsional)</label>
+            <input type="text" id="abs-nominal" placeholder="Contoh: Rp 1.000.000 / tahun">
+          </div>
+          <div class="form-group">
+            <label for="abs-tahun">Tahun Ajaran (opsional)</label>
+            <input type="text" id="abs-tahun" placeholder="Contoh: 2026/2027">
+          </div>
+          <div class="form-group">
+            <label for="abs-keterangan">Keterangan (opsional)</label>
+            <textarea id="abs-keterangan" rows="2" placeholder="Catatan untuk siswa..."></textarea>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Simpan Beasiswa</button>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="cari-admin-beasiswa" placeholder="Cari nama siswa / beasiswa...">
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No</th><th>Siswa</th><th>Kelas</th><th>Beasiswa</th><th>Tahun</th><th>Dibaca</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-beasiswa-tbody"><tr><td colspan="7">Memuat...</td></tr></tbody>
         </table>
       </div>
 

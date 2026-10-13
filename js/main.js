@@ -418,6 +418,93 @@ function dummyPengumuman() {
   ];
 }
 
+/* ---------- Beasiswa (diberikan Admin, tampil sebagai pemberitahuan siswa) ---------- */
+var BEASISWA_KEY = "edusmart_beasiswa";
+
+function getBeasiswa() {
+  try {
+    var raw = DB.get(BEASISWA_KEY);
+    var arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function setBeasiswa(arr) {
+  DB.set(BEASISWA_KEY, JSON.stringify(arr || []));
+}
+
+/* Beasiswa milik satu siswa: cocokkan lewat studentId, NIS, atau username login. */
+function beasiswaSiswa(sess) {
+  var id = "", nis = "";
+  try {
+    if (typeof resolveStudentByLogin === "function" && loginKey(sess)) {
+      var st = resolveStudentByLogin(loginKey(sess));
+      if (st) { id = st.studentId; nis = st.nis; }
+    }
+  } catch (e) { /* abaikan, cocokkan lewat username */ }
+  var key = String(loginKey(sess) || "").toLowerCase();
+  return getBeasiswa().filter(function (b) {
+    if (id && b.studentId === id) return true;
+    if (nis && String(b.nis) === String(nis)) return true;
+    return key && (String(b.nis || "").toLowerCase() === key || String(b.username || "").toLowerCase() === key);
+  });
+}
+
+/* Kartu "Beasiswa Saya" + tombol tandai dibaca di dashboard siswa. */
+function renderBeasiswaSiswa(sess) {
+  var card = document.getElementById("beasiswa-card");
+  var listBox = document.getElementById("beasiswa-list");
+  if (!card || !listBox) return;
+  var daftar = beasiswaSiswa(sess);
+  if (!daftar.length) { card.hidden = true; return; }
+  card.hidden = false;
+
+  var belum = daftar.filter(function (b) { return !b.dibaca; });
+  var badge = document.getElementById("beasiswa-badge");
+  if (badge) {
+    badge.hidden = belum.length === 0;
+    badge.textContent = belum.length + " baru";
+  }
+
+  listBox.innerHTML = daftar.map(function (b) {
+    return "<li style='margin-bottom:.6rem'>" +
+      (b.dibaca ? "" : "<span class='tag'>Baru</span> ") +
+      "<strong>" + escKegiatan(b.namaBeasiswa) + "</strong>" +
+      (b.jenis ? " &bull; " + escKegiatan(b.jenis) : "") +
+      (b.tahun ? " &bull; " + escKegiatan(b.tahun) : "") +
+      (b.nominal ? "<br><span class='muted'>Nilai: " + escKegiatan(b.nominal) + "</span>" : "") +
+      (b.keterangan ? "<br>" + escKegiatan(b.keterangan) : "") +
+      "<br><span class='muted'>Diberikan: " + escKegiatan(b.tanggal || "-") + "</span>" +
+      "</li>";
+  }).join("");
+
+  var btn = document.getElementById("beasiswa-tandai");
+  if (btn) {
+    btn.hidden = belum.length === 0;
+    btn.onclick = function () {
+      var idBelum = belum.map(function (b) { return b.id; });
+      setBeasiswa(getBeasiswa().map(function (b) {
+        if (idBelum.indexOf(b.id) !== -1) return Object.assign({}, b, { dibaca: true });
+        return b;
+      }));
+      renderBeasiswaSiswa(sess);
+      renderPengumumanSiswa(sess);
+    };
+  }
+}
+
+/* Daftar pengumuman siswa; notifikasi beasiswa yang belum dibaca tampil di atas. */
+function renderPengumumanSiswa(sess) {
+  var pu = document.getElementById("pengumuman-list");
+  if (!pu) return;
+  var notifBeasiswa = beasiswaSiswa(sess).filter(function (b) { return !b.dibaca; }).map(function (b) {
+    return { tanggal: b.tanggal || "-", isi: "\uD83C\uDF93 Anda menerima " + b.namaBeasiswa + (b.tahun ? " (" + b.tahun + ")" : "") + ". Lihat bagian \u201CBeasiswa Saya\u201D di bawah." };
+  });
+  pu.innerHTML = notifBeasiswa.concat(dummyPengumuman()).map(function (x) {
+    return "<li><strong>" + x.tanggal + "</strong> &mdash; " + x.isi + "</li>";
+  }).join("");
+}
+
 /* ---------- Helper pengumpulan & nilai ---------- */
 function getSubmissions() {
   try { return JSON.parse(DB.get(SUBMIT_KEY)) || []; }
@@ -594,10 +681,8 @@ function initDashboard(sess) {
   document.getElementById("stat-tugas").textContent = belum;
   document.getElementById("stat-materi").textContent = daftarMateri(loginKey(sess)).length;
 
-  var pu = document.getElementById("pengumuman-list");
-  if (pu) pu.innerHTML = dummyPengumuman().map(function (x) {
-    return "<li><strong>" + x.tanggal + "</strong> &mdash; " + x.isi + "</li>";
-  }).join("");
+  renderPengumumanSiswa(sess);
+  renderBeasiswaSiswa(sess);
 
   var jh = document.getElementById("jadwal-hari-ini");
   if (jh) {
