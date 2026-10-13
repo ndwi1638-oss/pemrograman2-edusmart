@@ -30,6 +30,7 @@
         <a class="side-link" href="#jadwal">Kelola Jadwal</a>
         <a class="side-link" href="#raport">Raport Digital</a>
         <a class="side-link" href="#kegiatan">Kelola Kegiatan</a>
+        <a class="side-link" href="#galeri">Kelola Galeri</a>
         <a class="side-link" href="#dummy">Data Dummy</a>
       </nav>
       <button class="side-logout" id="btn-logout">Logout</button>
@@ -426,6 +427,53 @@
         <table class="table">
           <thead><tr><th>No</th><th>Judul</th><th>Kategori</th><th>Aksi</th></tr></thead>
           <tbody id="admin-lomba-tbody"><tr><td colspan="4">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="page-head" id="galeri" style="margin-top:1.6rem">
+        <h2>Kelola Galeri</h2>
+        <p>Tambah foto baru ke halaman Galeri publik. Foto tambahan bisa dihapus kembali kapan saja. Untuk mengganti foto bawaan, buka halaman <a href="galeri.html">Galeri</a>.</p>
+      </div>
+      <div class="form-card" style="max-width:100%;margin-bottom:1.2rem">
+        <h3>Tambah Foto Galeri</h3>
+        <div id="agal-alert" class="alert" role="alert"></div>
+        <form id="form-galeri-admin" novalidate>
+          <div class="form-group">
+            <label for="agal-judul">Judul Foto</label>
+            <input type="text" id="agal-judul" placeholder="Contoh: Upacara HUT Sekolah">
+          </div>
+          <div class="form-group">
+            <label for="agal-kategori">Kategori</label>
+            <select id="agal-kategori">
+              <option value="gedung">Gedung Sekolah</option>
+              <option value="kepala">Kepala Sekolah</option>
+              <option value="wakil">Wakil Kepala Sekolah</option>
+              <option value="ekstra">Ekstrakurikuler</option>
+              <option value="lomba">Lomba</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="agal-deskripsi">Deskripsi</label>
+            <textarea id="agal-deskripsi" rows="2" placeholder="Keterangan singkat foto..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="agal-file">Foto (wajib)</label>
+            <input type="file" id="agal-file" accept="image/*">
+            <p class="upload-note" id="agal-file-note"></p>
+          </div>
+          <div class="toolbar">
+            <button type="submit" class="btn btn-dark btn-auto">Tambah ke Galeri</button>
+            <a class="btn btn-secondary" style="color:#1e293b;border-color:#cbd5e1" href="galeri.html">Lihat Galeri</a>
+          </div>
+        </form>
+      </div>
+      <div class="toolbar">
+        <input type="text" id="cari-admin-galeri" placeholder="Cari foto tambahan...">
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Aksi</th></tr></thead>
+          <tbody id="admin-galeri-tbody"><tr><td colspan="4">Memuat...</td></tr></tbody>
         </table>
       </div>
 

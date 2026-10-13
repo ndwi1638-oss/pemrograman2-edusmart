@@ -38,7 +38,7 @@
       <div class="container">
         <h2>Dokumentasi Kegiatan</h2>
         <p class="subtitle">Saring berdasarkan kategori atau cari berdasarkan judul.</p>
-        <p class="upload-hint" id="galeri-hint">Setiap kartu punya tombol <strong>Ganti Foto</strong>. Pilih file gambar Anda (misalnya <em>kepala sekolah.jpg</em>) untuk mengganti foto galeri itu. Tekan <strong>Kembalikan</strong> untuk memakai foto bawaan lagi.</p>
+        <p class="upload-hint" id="galeri-hint">Tekan <strong>Tambah Foto</strong> di bawah untuk menambahkan foto baru, atau <strong>Ganti Foto</strong> pada tiap kartu untuk mengganti foto bawaan. Tekan <strong>Kembalikan</strong> untuk memakai foto bawaan lagi.</p>
 
         <div class="toolbar">
           <input type="text" id="cari-galeri" placeholder="Cari galeri berdasarkan judul...">
@@ -50,6 +50,39 @@
           <button class="filter-btn" data-galeri-filter="wakil">Wakil Kepala Sekolah</button>
           <button class="filter-btn" data-galeri-filter="ekstra">Ekstrakurikuler</button>
           <button class="filter-btn" data-galeri-filter="lomba">Lomba</button>
+        </div>
+
+        <div class="form-card" id="galeri-tambah-card" style="max-width:100%;margin-top:1.2rem;display:none">
+          <h3>Tambah Foto ke Galeri</h3>
+          <p class="muted">Unggah foto baru beserta judul, kategori, dan deskripsi. Foto akan langsung tampil di galeri ini.</p>
+          <form id="form-galeri-publik" novalidate>
+            <div class="form-group">
+              <label for="gp-judul">Judul Foto</label>
+              <input type="text" id="gp-judul" placeholder="Contoh: Upacara HUT Sekolah">
+            </div>
+            <div class="form-group">
+              <label for="gp-kategori">Kategori</label>
+              <select id="gp-kategori">
+                <option value="gedung">Gedung Sekolah</option>
+                <option value="kepala">Kepala Sekolah</option>
+                <option value="wakil">Wakil Kepala Sekolah</option>
+                <option value="ekstra">Ekstrakurikuler</option>
+                <option value="lomba">Lomba</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="gp-deskripsi">Deskripsi</label>
+              <textarea id="gp-deskripsi" rows="2" placeholder="Keterangan singkat foto..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="gp-file">Foto (wajib)</label>
+              <input type="file" id="gp-file" accept="image/*">
+              <p class="upload-note" id="gp-note"></p>
+            </div>
+            <div class="toolbar">
+              <button type="submit" class="btn btn-dark btn-auto">Tambah Foto</button>
+            </div>
+          </form>
         </div>
 
         <div class="gallery-grid" id="galeri-list"><p class="muted">Memuat...</p></div>

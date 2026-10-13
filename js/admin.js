@@ -1418,6 +1418,52 @@ function bindAdminNav() {
   if (el && cu) el.textContent = "Halo, " + cu.nama;
 }
 
+/* ---------- Kelola Galeri ---------- */
+function initAdminGaleri() {
+  var form = document.getElementById("form-galeri-admin");
+  if (!form) return;
+  var tbody = document.getElementById("admin-galeri-tbody");
+  var cari = document.getElementById("cari-admin-galeri");
+
+  function render() {
+    var q = ((cari && cari.value) || "").toLowerCase();
+    var arr = getGaleriCustom().filter(function (c) {
+      return !q || (c.judul || "").toLowerCase().indexOf(q) !== -1;
+    });
+    if (!arr.length) {
+      tbody.innerHTML = "<tr><td colspan='4'>Belum ada foto tambahan. Foto bawaan bisa diganti di halaman <a href='galeri.html'>Galeri</a>.</td></tr>";
+      return;
+    }
+    tbody.innerHTML = arr.map(function (c) {
+      return "<tr>" +
+        "<td><img src='" + c.file + "' alt='' style='width:72px;height:54px;object-fit:cover;border-radius:6px'></td>" +
+        "<td>" + escKegiatan(c.judul) + "</td>" +
+        "<td>" + escKegiatan(GALERI_LABEL[c.kategori] || c.kategori || "-") + "</td>" +
+        "<td><button type='button' class='btn-reset' data-galeri-admin-hapus='" + escKegiatan(c.id) + "'>Hapus</button></td>" +
+        "</tr>";
+    }).join("");
+  }
+
+  if (cari) cari.addEventListener("input", render);
+
+  tbody.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-galeri-admin-hapus]") : null;
+    if (!btn) return;
+    if (!window.confirm("Hapus foto ini dari galeri?")) return;
+    hapusGaleriCustom(btn.getAttribute("data-galeri-admin-hapus"));
+    showAlert("agal-alert", "Foto dihapus dari galeri.", "success");
+    render();
+  });
+
+  pasangFormTambahGaleri({
+    formId: "form-galeri-admin", judulId: "agal-judul", kategoriId: "agal-kategori",
+    deskripsiId: "agal-deskripsi", fileId: "agal-file", noteId: "agal-file-note",
+    onSukses: function () { showAlert("agal-alert", "Foto berhasil ditambahkan ke galeri.", "success"); render(); }
+  });
+
+  render();
+}
+
 /* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", function () {
   aSeed();
@@ -1437,4 +1483,5 @@ document.addEventListener("DOMContentLoaded", function () {
   initAdminJadwal();
   initAdminRaport();
   initAdminKegiatan();
+  initAdminGaleri();
 });

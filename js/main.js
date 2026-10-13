@@ -1080,6 +1080,76 @@ var GALERI_LABEL = {
 var GALERI_UPLOAD_KEY = "edusmart_galeri_photos";
 var GALERI_UPLOAD_MAKS = 800;
 
+/* Foto BARU yang ditambahkan admin (bukan sekadar mengganti foto bawaan).
+   Disimpan sebagai array: { id, file(dataURL), judul, kategori, deskripsi }. */
+var GALERI_CUSTOM_KEY = "edusmart_galeri_custom";
+
+function getGaleriCustom() {
+  try {
+    var raw = DB.get(GALERI_CUSTOM_KEY);
+    var arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function saveGaleriCustom(arr) {
+  DB.set(GALERI_CUSTOM_KEY, JSON.stringify(arr || []));
+}
+
+function hapusGaleriCustom(id) {
+  saveGaleriCustom(getGaleriCustom().filter(function (c) { return String(c.id) !== String(id); }));
+}
+
+/* Semua kartu galeri: foto tambahan (terbaru lebih dulu) + foto bawaan. */
+function daftarGaleri() {
+  var tambahan = getGaleriCustom().map(function (c) {
+    return { custom: true, id: c.id, file: c.file, judul: c.judul, kategori: c.kategori, deskripsi: c.deskripsi || "" };
+  });
+  var bawaan = dummyGaleri().map(function (g) {
+    return { custom: false, file: g.file, judul: g.judul, kategori: g.kategori, deskripsi: g.deskripsi };
+  });
+  return tambahan.concat(bawaan);
+}
+
+/* Pasang form "Tambah Foto Galeri". Dipakai di halaman Galeri (publik) dan
+   Dashboard Admin. opts: { formId, judulId, kategoriId, deskripsiId, fileId,
+   noteId, onSukses }. Hanya aktif untuk admin. */
+function pasangFormTambahGaleri(opts) {
+  var form = document.getElementById(opts.formId);
+  if (!form || !bolehUploadGaleri()) return;
+  var file = document.getElementById(opts.fileId);
+  var note = document.getElementById(opts.noteId);
+  function pesan(t, ok) { if (note) { note.textContent = t; note.style.color = ok ? "#16a34a" : "#dc2626"; } }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var judul = (document.getElementById(opts.judulId).value || "").trim();
+    var kategori = document.getElementById(opts.kategoriId).value || "gedung";
+    var deskripsi = (document.getElementById(opts.deskripsiId).value || "").trim();
+    if (!judul) { pesan("Judul foto wajib diisi.", false); return; }
+    if (!file || !file.files || !file.files[0]) { pesan("Pilih file foto terlebih dahulu.", false); return; }
+    kecilkanFoto(file.files[0], GALERI_UPLOAD_MAKS, function (dataUrl, galat) {
+      if (galat) { pesan(galat, false); return; }
+      try {
+        var arr = getGaleriCustom();
+        arr.unshift({
+          id: String(Date.now()) + Math.random().toString(36).slice(2, 6),
+          file: dataUrl, judul: judul, kategori: kategori, deskripsi: deskripsi
+        });
+        saveGaleriCustom(arr);
+      } catch (err) {
+        pesan("Gagal menyimpan foto (penyimpanan penuh?).", false);
+        return;
+      }
+      if (file) file.value = "";
+      document.getElementById(opts.judulId).value = "";
+      document.getElementById(opts.deskripsiId).value = "";
+      pesan("Foto berhasil ditambahkan ke galeri.", true);
+      if (typeof opts.onSukses === "function") opts.onSukses();
+    });
+  });
+}
+
+
 function dummyGaleri() {
   return [
     { file: "images/galeri/gedung/gedung-sekolah.jpg", judul: "Gedung Sekolah Tampak Depan", kategori: "gedung", deskripsi: "Gerbang dan tampak depan gedung utama EduSmart yang modern dan asri." },
@@ -1124,8 +1194,8 @@ function initGaleri() {
   if (!bolehUpload) {
     var hint = document.getElementById("galeri-hint");
     if (hint) {
-      hint.innerHTML = "Tombol <strong>Ganti Foto</strong> hanya tersedia untuk <strong>admin</strong>. " +
-        "<a href=\"login.html\">Login sebagai admin</a> untuk mengganti foto galeri.";
+      hint.innerHTML = "Tombol <strong>Tambah Foto</strong> dan <strong>Ganti Foto</strong> hanya tersedia untuk <strong>admin</strong>. " +
+        "<a href=\"login.html\">Login sebagai admin</a> untuk menambah atau mengganti foto galeri.";
     }
   }
 
@@ -1151,27 +1221,33 @@ function initGaleri() {
 
   function render() {
     var q = (cari.value || "").toLowerCase();
-    var rows = dummyGaleri().map(function (g, i) { return { g: g, i: i }; }).filter(function (x) {
+    var photos = getFotoGaleri();
+    var rows = daftarGaleri().map(function (g, i) { return { g: g, i: i }; }).filter(function (x) {
       var okF = aktif === "semua" || x.g.kategori === aktif;
-      var okQ = x.g.judul.toLowerCase().indexOf(q) !== -1 || x.g.deskripsi.toLowerCase().indexOf(q) !== -1;
+      var okQ = (x.g.judul || "").toLowerCase().indexOf(q) !== -1 || (x.g.deskripsi || "").toLowerCase().indexOf(q) !== -1;
       return okF && okQ;
     });
-    var photos = getFotoGaleri();
     list.innerHTML = rows.map(function (x) {
       var g = x.g;
-      var kunci = kunciGaleri(g);
-      var diunggah = !!photos[kunci];
-      /* Semua kategori bisa diganti fotonya, tapi hanya oleh admin. */
+      var kunci = g.custom ? ("c" + g.id) : kunciGaleri(g);
+      var diunggah = !g.custom && !!photos[kunci];
+      var src = g.custom ? g.file : fotoGaleri(g, photos);
+      var judul = escKegiatan(g.judul);
+      /* Hanya admin yang boleh menambah/mengganti/menghapus. */
       var aksi = "";
       if (bolehUpload) {
-        aksi = "<p class='g-aksi'>" +
-          "<label class='btn-upload'>Ganti Foto<input type='file' data-galeri-upload='" + kunci + "' accept='image/*' hidden></label>" +
-          "<button type='button' class='btn-reset' data-galeri-reset='" + kunci + "'" + (diunggah ? "" : " hidden") + ">Kembalikan</button>" +
-          "</p><p class='upload-note' id='galeri-note-" + kunci + "'></p>";
+        aksi = "<p class='g-aksi'>";
+        if (g.custom) {
+          aksi += "<button type='button' class='btn-reset' data-galeri-hapus='" + escKegiatan(g.id) + "'>Hapus Foto</button>";
+        } else {
+          aksi += "<label class='btn-upload'>Ganti Foto<input type='file' data-galeri-upload='" + kunci + "' accept='image/*' hidden></label>" +
+            "<button type='button' class='btn-reset' data-galeri-reset='" + kunci + "'" + (diunggah ? "" : " hidden") + ">Kembalikan</button>";
+        }
+        aksi += "</p><p class='upload-note' id='galeri-note-" + kunci + "'></p>";
       }
-      return "<div class='card g-card'><button class='g-img-btn' data-galeri-idx='" + x.i + "' aria-label='Lihat " + g.judul + "'>" +
-        "<img src='" + fotoGaleri(g, photos) + "' alt='" + g.judul + "' loading='lazy' data-photo-fallback></button>" +
-        "<span class='tag'>" + GALERI_LABEL[g.kategori] + "</span><h3>" + g.judul + "</h3><p>" + g.deskripsi + "</p>" +
+      return "<div class='card g-card'><button class='g-img-btn' data-galeri-idx='" + x.i + "' aria-label='Lihat " + judul + "'>" +
+        "<img src='" + src + "' alt='" + judul + "' loading='lazy' data-photo-fallback></button>" +
+        "<span class='tag'>" + escKegiatan(GALERI_LABEL[g.kategori] || g.kategori || "Galeri") + "</span><h3>" + judul + "</h3><p>" + escKegiatan(g.deskripsi) + "</p>" +
         aksi + "</div>";
     }).join("") || "<p class='muted'>Galeri tidak ditemukan.</p>";
   }
@@ -1210,6 +1286,13 @@ function initGaleri() {
   });
 
   list.addEventListener("click", function (e) {
+    var hapus = e.target.closest ? e.target.closest("[data-galeri-hapus]") : null;
+    if (hapus) {
+      if (!bolehUpload) return;
+      hapusGaleriCustom(hapus.getAttribute("data-galeri-hapus"));
+      render();
+      return;
+    }
     var kembali = e.target.closest ? e.target.closest("[data-galeri-reset]") : null;
     if (kembali) {
       if (!bolehUpload) return;
@@ -1225,9 +1308,10 @@ function initGaleri() {
     }
     var btn = e.target.closest ? e.target.closest("[data-galeri-idx]") : null;
     if (!btn) return;
-    var g = dummyGaleri()[parseInt(btn.getAttribute("data-galeri-idx"), 10)];
+    var g = daftarGaleri()[parseInt(btn.getAttribute("data-galeri-idx"), 10)];
+    if (!g) return;
     var big = document.getElementById("lightbox-img");
-    big.src = fotoGaleri(g);
+    big.src = g.custom ? g.file : fotoGaleri(g);
     big.alt = g.judul;
     document.getElementById("lightbox-judul").textContent = g.judul;
     document.getElementById("lightbox-deskripsi").textContent = g.deskripsi;
@@ -1236,6 +1320,17 @@ function initGaleri() {
   document.getElementById("lightbox-close").addEventListener("click", tutup);
   box.addEventListener("click", function (e) { if (e.target === box) tutup(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") tutup(); });
+
+  /* Panel "Tambah Foto" pada halaman Galeri hanya ditampilkan untuk admin. */
+  if (bolehUpload) {
+    var panelTambah = document.getElementById("galeri-tambah-card");
+    if (panelTambah) panelTambah.style.display = "";
+    pasangFormTambahGaleri({
+      formId: "form-galeri-publik", judulId: "gp-judul", kategoriId: "gp-kategori",
+      deskripsiId: "gp-deskripsi", fileId: "gp-file", noteId: "gp-note",
+      onSukses: render
+    });
+  }
   render();
 }
 
