@@ -150,6 +150,7 @@
   }
 
   REMOTE.put = function (key, value) {
+    if (key === MIRROR_KEY) return Promise.resolve();
     if (REMOTE._mirror) {
       if (value === null || value === undefined) delete REMOTE._mirror[key];
       else REMOTE._mirror[key] = value;
@@ -161,13 +162,16 @@
   };
 
   REMOTE.del = function (key) {
+    if (key === MIRROR_KEY) return Promise.resolve();
     if (REMOTE._mirror) { delete REMOTE._mirror[key]; tulisMirror(REMOTE._mirror); }
     return hapusAwan(key);
   };
 
   REMOTE.muatUlang = function () {
     return ambilAwan().then(function (data) {
+      delete data[MIRROR_KEY];
       var mirror = bacaMirror() || {};
+      delete mirror[MIRROR_KEY];
       var berubah = false;
       Object.keys(data).forEach(function (k) {
         if (mirror[k] !== data[k]) { mirror[k] = data[k]; berubah = true; }
@@ -181,11 +185,15 @@
 
   function kerja() {
     return ambilAwan().then(function (data) {
+      delete data[MIRROR_KEY];
       var mirror = bacaMirror() || {};
+      delete mirror[MIRROR_KEY];
       var lokal = snapshotLokal();
 
-      /* Gabungan: data lokal + cadangan lokal, lalu data AWAN paling menang. */
+      /* Gabungan: data lokal + cadangan lokal, lalu data AWAN paling menang.
+         Kunci cadangan (mirror) tidak boleh ikut dikirim ke awan. */
       var gabung = Object.assign({}, lokal, mirror, data);
+      delete gabung[MIRROR_KEY];
 
       /* Kunci yang belum ada di awan di-upload ke awan (migrasi otomatis),
          sehingga foto/data lama di browser ini ikut tampil untuk semua. */
