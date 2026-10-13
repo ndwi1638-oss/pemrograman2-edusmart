@@ -113,6 +113,9 @@ function seedSchedules() {
 }
 
 function seedGuruData() {
+  /* Jangan menyiapkan/menulis data default saat data awan belum selesai dimuat,
+     supaya tidak menimpa data yang tersimpan di server (kasus "data hilang"). */
+  if (typeof window.EduSmartAwanSiap === "function" && !window.EduSmartAwanSiap()) return;
   // TIDAK ada data dummy siswa/guru/materi/tugas/nilai/absensi/raport.
   // Key yang belum ada hanya disiapkan kosong; data lama TIDAK ditimpa.
   // Data diisi oleh: Admin (siswa/guru/kelas/jadwal) ->

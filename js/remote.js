@@ -72,11 +72,19 @@
   var REMOTE = {
     aktif: !!aktif,
     siap: null,                 // promise: selesai membaca/menyiapkan data awan
+    berhasil: false,            // true setelah data awan berhasil dibaca
     put: function () { return Promise.resolve(); },
     del: function () { return Promise.resolve(); },
     muatUlang: function () { return Promise.resolve(null); }
   };
   window.EduSmartRemote = REMOTE;
+
+  /* true bila aman menulis data default/kosong: artinya fitur awan tidak aktif,
+     ATAU data awan sudah berhasil dibaca. Dipakai halaman supaya tidak menimpa
+     data server dengan array kosong saat data awan belum termuat. */
+  window.EduSmartAwanSiap = function () {
+    return !REMOTE.aktif || REMOTE.berhasil === true;
+  };
 
   /* Dipakai tiap halaman: jalankan fn() setelah DOM siap DAN data awan siap
      (atau langsung bila fitur awan tidak aktif). Selalu tersedia. */
@@ -138,6 +146,13 @@
     });
   }
 
+  /* true bila nilai dianggap kosong (belum ada / array / objek kosong). */
+  function kosong(v) {
+    if (v === null || v === undefined) return true;
+    var s = String(v).trim();
+    return s === "" || s === "[]" || s === "{}" || s === "null";
+  }
+
   /* true bila dua objek {kunci: nilai} berbeda. */
   function beda(a, b) {
     a = a || {}; b = b || {};
@@ -185,19 +200,27 @@
 
   function kerja() {
     return ambilAwan().then(function (data) {
+      REMOTE.berhasil = true;   // data awan sukses dibaca -> aman menulis default
       delete data[MIRROR_KEY];
       var mirror = bacaMirror() || {};
       delete mirror[MIRROR_KEY];
       var lokal = snapshotLokal();
 
       /* Gabungan: data lokal + cadangan lokal, lalu data AWAN paling menang.
+         TETAPI data awan yang KOSONG tidak menimpa data lokal yang ada isinya
+         (perlindungan dari array kosong yang sempat tersimpan).
          Kunci cadangan (mirror) tidak boleh ikut dikirim ke awan. */
-      var gabung = Object.assign({}, lokal, mirror, data);
+      var gabung = Object.assign({}, lokal, mirror);
       delete gabung[MIRROR_KEY];
+      var dorong = {};
+
+      Object.keys(data).forEach(function (k) {
+        if (kosong(data[k]) && !kosong(gabung[k])) dorong[k] = gabung[k];
+        else gabung[k] = data[k];
+      });
 
       /* Kunci yang belum ada di awan di-upload ke awan (migrasi otomatis),
          sehingga foto/data lama di browser ini ikut tampil untuk semua. */
-      var dorong = {};
       Object.keys(gabung).forEach(function (k) {
         if (!(k in data)) dorong[k] = gabung[k];
       });

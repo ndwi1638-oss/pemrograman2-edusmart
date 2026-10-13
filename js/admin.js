@@ -73,6 +73,9 @@ function aTeacherName(id) { var t = aTeacherById(id); return t ? t.nama : "-"; }
 
 /* ---------- Seed struktural (tanpa dummy nama) ---------- */
 function aSeed() {
+  /* Jangan menulis data default/kosong saat data awan belum selesai dimuat,
+     supaya tidak menimpa data yang tersimpan di server (kasus "data hilang"). */
+  if (typeof window.EduSmartAwanSiap === "function" && !window.EduSmartAwanSiap()) return;
   var majors = aGet(A_MAJORS_KEY);
   if (DB.get(A_MAJORS_KEY) === null) {
     aSet(A_MAJORS_KEY, [
