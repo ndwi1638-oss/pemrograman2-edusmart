@@ -108,6 +108,10 @@ function showAlert(id, msg, type) {
    atau NIP/NUPTK, password-nya dibuat Admin) — tidak ada pendaftaran
    mandiri, dan tidak ada dummy siswa/guru/tugas/materi otomatis. */
 function seedDummyUsers() {
+  /* Jangan menulis ulang daftar akun saat data awan belum selesai dimuat,
+     supaya akun siswa/guru yang tersimpan di server tidak terhapus
+     (pernah terjadi: akun siswa hilang sehingga tidak bisa login). */
+  if (typeof window.EduSmartAwanSiap === "function" && !window.EduSmartAwanSiap()) return;
   var users = getUsers();
   var ada = false, berubah = false;
   for (var i = 0; i < users.length; i++) {
