@@ -37,6 +37,6 @@
    ========================================================================== */
 
 window.EDUSMART_FIREBASE = {
-  enabled: false,
-  databaseURL: ""
+  enabled: true,
+  databaseURL: "https://edusmart-1e132-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
