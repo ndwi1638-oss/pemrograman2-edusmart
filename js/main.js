@@ -1119,10 +1119,14 @@ function initGaleri() {
   var aktif = "semua";
   var bolehUpload = bolehUploadGaleri();
 
-  /* Petunjuk upload hanya relevan untuk admin. */
+  /* Petunjuk upload hanya relevan untuk admin. Untuk pengunjung/siswa/guru,
+     jangan dihilangkan diam-diam - beri tahu bahwa perlu login admin. */
   if (!bolehUpload) {
     var hint = document.getElementById("galeri-hint");
-    if (hint) hint.remove();
+    if (hint) {
+      hint.innerHTML = "Tombol <strong>Ganti Foto</strong> hanya tersedia untuk <strong>admin</strong>. " +
+        "<a href=\"login.html\">Login sebagai admin</a> untuk mengganti foto galeri.";
+    }
   }
 
   /* Kunci unik tiap kartu, diambil dari nama file:
