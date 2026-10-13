@@ -433,7 +433,7 @@ function setBeasiswa(arr) {
   DB.set(BEASISWA_KEY, JSON.stringify(arr || []));
 }
 
-/* Beasiswa milik satu siswa: cocokkan lewat studentId, NIS, atau username login. */
+/* Beasiswa milik satu siswa: cocokkan lewat userId akun, studentId, NIS, atau username login. */
 function beasiswaSiswa(sess) {
   var id = "", nis = "";
   try {
@@ -441,9 +441,18 @@ function beasiswaSiswa(sess) {
       var st = resolveStudentByLogin(loginKey(sess));
       if (st) { id = st.studentId; nis = st.nis; }
     }
-  } catch (e) { /* abaikan, cocokkan lewat username */ }
+  } catch (e) { /* abaikan, cocokkan lewat akun/username */ }
   var key = String(loginKey(sess) || "").toLowerCase();
+  var uidAkun = "";
+  try {
+    var users = (typeof getUsers === "function") ? getUsers() : [];
+    users.forEach(function (u) {
+      if (!u || !u.id) return;
+      if (String(u.username || "").toLowerCase() === key || String(u.email || "").toLowerCase() === key) uidAkun = u.id;
+    });
+  } catch (e) { /* abaikan */ }
   return getBeasiswa().filter(function (b) {
+    if (uidAkun && b.userId && b.userId === uidAkun) return true;
     if (id && b.studentId === id) return true;
     if (nis && String(b.nis) === String(nis)) return true;
     return key && (String(b.nis || "").toLowerCase() === key || String(b.username || "").toLowerCase() === key);
@@ -725,6 +734,9 @@ function initProfil(sess) {
     setDisabled(true);
     showAlert("profil-alert", "Profil berhasil disimpan.", "success");
   });
+
+  /* Beasiswa milik siswa ini, terhubung dengan akunnya. */
+  renderBeasiswaSiswa(sess);
 }
 
 /* Jurusan siswa ("IPA"/"IPS"/""): dibaca dari Profil, fallback nama kelas.
