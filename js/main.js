@@ -514,6 +514,48 @@ function renderPengumumanSiswa(sess) {
   }).join("");
 }
 
+/* ---------- OSIS: posisi Ketua OSIS terhubung ke akun siswa ---------- */
+/* Jika siswa yang login adalah Ketua OSIS, kembalikan data OSIS-nya; jika bukan, null. */
+function posisiOsisSiswa(sess) {
+  var o = getOsis();
+  var id = "", nis = "", uidAkun = "";
+  try {
+    if (typeof resolveStudentByLogin === "function" && loginKey(sess)) {
+      var st = resolveStudentByLogin(loginKey(sess));
+      if (st) { id = st.studentId; nis = st.nis; }
+    }
+  } catch (e) { /* abaikan */ }
+  var key = String(loginKey(sess) || "").toLowerCase();
+  try {
+    var users = (typeof getUsers === "function") ? getUsers() : [];
+    users.forEach(function (u) {
+      if (u && u.id && (String(u.username || "").toLowerCase() === key || String(u.email || "").toLowerCase() === key)) uidAkun = u.id;
+    });
+  } catch (e) { /* abaikan */ }
+  var cocok = (uidAkun && o.ketuaUserId && o.ketuaUserId === uidAkun) ||
+    (id && o.ketuaId && o.ketuaId === id) ||
+    (nis && o.ketuaNis && String(o.ketuaNis) === String(nis)) ||
+    (key && o.ketuaNis && String(o.ketuaNis).toLowerCase() === key);
+  return cocok ? o : null;
+}
+
+/* Kartu "Ketua OSIS" di akun siswa (dashboard & profil). */
+function renderOsisSiswa(sess) {
+  var card = document.getElementById("osis-siswa-card");
+  var box = document.getElementById("osis-siswa-info");
+  if (!card || !box) return;
+  var o = posisiOsisSiswa(sess);
+  if (!o) { card.hidden = true; return; }
+  card.hidden = false;
+  box.innerHTML =
+    "<p class='team-nim' style='margin-bottom:.4rem'>Ketua OSIS &bull; Periode " + escKegiatan(o.periode) + "</p>" +
+    (o.visi ? "<p>" + escKegiatan(o.visi) + "</p>" : "") +
+    (o.proker && o.proker.length
+      ? "<h4 style='margin-top:.6rem'>Program Kerja OSIS</h4><ul class='list-plain'>" +
+        o.proker.map(function (p) { return "<li>&check; " + escKegiatan(p) + "</li>"; }).join("") + "</ul>"
+      : "");
+}
+
 /* ---------- Helper pengumpulan & nilai ---------- */
 function getSubmissions() {
   try { return JSON.parse(DB.get(SUBMIT_KEY)) || []; }
@@ -692,6 +734,7 @@ function initDashboard(sess) {
 
   renderPengumumanSiswa(sess);
   renderBeasiswaSiswa(sess);
+  renderOsisSiswa(sess);
 
   var jh = document.getElementById("jadwal-hari-ini");
   if (jh) {
@@ -737,6 +780,7 @@ function initProfil(sess) {
 
   /* Beasiswa milik siswa ini, terhubung dengan akunnya. */
   renderBeasiswaSiswa(sess);
+  renderOsisSiswa(sess);
 }
 
 /* Jurusan siswa ("IPA"/"IPS"/""): dibaca dari Profil, fallback nama kelas.

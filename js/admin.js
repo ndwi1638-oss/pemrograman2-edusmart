@@ -1247,11 +1247,40 @@ function initAdminKegiatan() {
   /* ---- Info OSIS ---- */
   var aoFotoBaru = "";
   var cur = getOsis();
+  var selAkun = document.getElementById("ao-akun");
   document.getElementById("ao-nama").value = cur.ketua;
   document.getElementById("ao-periode").value = cur.periode;
   document.getElementById("ao-visi").value = cur.visi;
   document.getElementById("ao-proker").value = cur.proker.join("\n");
   aBindFotoKegiatan("ao-foto", "ao-foto-note", function (v) { aoFotoBaru = v; });
+
+  /* Dropdown akun siswa (dikelompokkan per kelas). */
+  function isiAkunOsis() {
+    var terpilih = selAkun.value || cur.ketuaId || "";
+    var siswa = aGet(A_STUDENTS_KEY);
+    var kelas = aGet(A_CLASSES_KEY);
+    var html = "<option value=''>-- Pilih siswa --</option>";
+    kelas.forEach(function (k) {
+      var anggota = siswa.filter(function (s) { return s.classId === k.classId; });
+      if (!anggota.length) return;
+      html += "<optgroup label='" + aEsc(k.nama) + "'>";
+      anggota.forEach(function (s) {
+        html += "<option value='" + aEsc(s.studentId) + "'>" + aEsc(s.nama) + " (" + aEsc(s.nis || "-") + ")</option>";
+      });
+      html += "</optgroup>";
+    });
+    var tanpa = siswa.filter(function (s) { return !s.classId || !aClassById(s.classId); });
+    if (tanpa.length) {
+      html += "<optgroup label='Tanpa Kelas'>";
+      tanpa.forEach(function (s) {
+        html += "<option value='" + aEsc(s.studentId) + "'>" + aEsc(s.nama) + " (" + aEsc(s.nis || "-") + ")</option>";
+      });
+      html += "</optgroup>";
+    }
+    selAkun.innerHTML = html;
+    if (terpilih) selAkun.value = terpilih;
+  }
+
   document.getElementById("form-osis-admin").addEventListener("submit", function (e) {
     e.preventDefault();
     var ketua = document.getElementById("ao-nama").value.trim();
@@ -1263,11 +1292,34 @@ function initAdminKegiatan() {
     data.ketua = ketua; data.periode = periode; data.visi = visi;
     data.proker = proker.length ? proker : OSIS_DEFAULT.proker.slice();
     if (aoFotoBaru) data.foto = aoFotoBaru;
+
+    /* Tautkan ke AKUN siswa agar info Ketua OSIS tampil di akunnya. */
+    var st = aGet(A_STUDENTS_KEY).filter(function (s) { return s.studentId === selAkun.value; })[0];
+    if (!st && ketua) {
+      var kt = ketua.toLowerCase();
+      st = aGet(A_STUDENTS_KEY).filter(function (s) { return (s.nama || "").toLowerCase() === kt; })[0];
+    }
+    var akun = st ? aGet(A_USERS_KEY).filter(function (u) {
+      return (st.userId && u.id === st.userId) ||
+        (u.username && String(u.username) === String(st.nis || "")) ||
+        (u.email && st.email && String(u.email).toLowerCase() === String(st.email).toLowerCase());
+    })[0] : null;
+    data.ketuaId = st ? st.studentId : "";
+    data.ketuaUserId = (akun && akun.id) || (st && st.userId) || "";
+    data.ketuaNis = st ? (st.nis || "") : "";
+
     DB.set(A_OSIS_KEY, JSON.stringify(data));
     aoFotoBaru = "";
     document.getElementById("ao-foto-note").textContent = "";
-    showAlert("ao-alert", "Info OSIS berhasil disimpan dan tampil di halaman Kegiatan.", "success");
+    showAlert("ao-alert", st
+      ? "Info OSIS disimpan. " + st.nama + " akan melihat info Ketua OSIS di akunnya."
+      : "Info OSIS disimpan dan tampil di halaman Kegiatan.", "success");
   });
+
+  isiAkunOsis();
+  document.addEventListener("edusmart:siswa-berubah", isiAkunOsis);
+  selAkun.addEventListener("focus", isiAkunOsis);
+  document.querySelectorAll('a[href="#kegiatan"]').forEach(function (a) { a.addEventListener("click", isiAkunOsis); });
 
   /* ---- Ekstrakurikuler ---- */
   var akFotoBaru = "";
